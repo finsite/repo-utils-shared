@@ -63,6 +63,14 @@ def track_request_metrics(
         float:
     success :
         bool:  (Default value = True)
+    symbol : str :
+
+    rate_limit : int :
+
+    time_window : float :
+
+    success : bool :
+        (Default value = True)
     symbol: str :
 
     rate_limit: int :
@@ -74,6 +82,7 @@ def track_request_metrics(
 
     Returns
     -------
+
 
     """
     status = "success" if success else "failure"

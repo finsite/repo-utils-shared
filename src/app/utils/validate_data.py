@@ -37,9 +37,11 @@ def validate_data(data: dict[str, Any]) -> bool:
         dict[str:
     Any :
         returns: True if data is valid, False otherwise.
-    data: dict[str :
+    data : dict[str :
 
     Any] :
+
+    data: dict[str :
 
 
     Returns
@@ -52,13 +54,13 @@ def validate_data(data: dict[str, Any]) -> bool:
     TypeError
         If the data is not a dictionary.
 
-        Notes:
+    Notes
+    -----
     TypeError
         If the data is not a dictionary.
-
-        Notes:
+    Notes
+    -----
         The function logs an error message for each validation failure.
-
     """
     # Define the set of required keys
     required_keys: set[str] = {"symbol", "price", "volume", "timestamp"}
@@ -117,6 +119,8 @@ def _validate_symbol(symbol: str) -> bool:
         str:
     symbol :
         str:
+    symbol : str :
+
     symbol: str :
 
 
@@ -125,8 +129,8 @@ def _validate_symbol(symbol: str) -> bool:
     bool
         True if valid, False otherwise.
 
-        Notes:
-
+    Notes
+    -----
     """
     if not isinstance(symbol, str) or not symbol.isalpha():
         logger.error(f"Invalid symbol format: {symbol}")
@@ -149,6 +153,8 @@ def _validate_price(price: Any) -> bool:
         Any:
     price :
         Any:
+    price : Any :
+
     price: Any :
 
 
@@ -157,8 +163,8 @@ def _validate_price(price: Any) -> bool:
     bool
         True if valid, False otherwise.
 
-        Notes:
-
+    Notes
+    -----
     """
     # Check if the price is an integer or float and if it is non-negative
     if not isinstance(price, (int, float)) or price < 0:
@@ -174,21 +180,6 @@ def _validate_volume(volume: Any) -> bool:
     ----
         volume (Any): The value of the 'volume' field.
 
-    Returns:
-    -------
-        bool: True if valid, False otherwise.
-
-    Notes:
-    -----
-        A non-negative integer is used to represent the volume of a stock quote.
-        The function checks that the provided volume is of type int and if it
-        is non-negative. If the validation fails, an error message is logged.
-
-    Args:
-      volume: Any:
-
-    Returns:
-
     Parameters
     ----------
     volume :
@@ -197,12 +188,22 @@ def _validate_volume(volume: Any) -> bool:
         Any:
     volume :
         Any:
+    volume : Any :
+
     volume: Any :
 
 
     Returns
     -------
 
+    Notes
+    -----
+        A non-negative integer is used to represent the volume of a stock quote.
+        The function checks that the provided volume is of type int and if it
+        is non-negative. If the validation fails, an error message is logged.
+
+    Args:
+      volume: Any:
     """
     if not isinstance(volume, int) or volume < 0:
         logger.error(f"Invalid volume format: {volume}")
@@ -220,15 +221,6 @@ def _validate_timestamp(timestamp: Any) -> bool:
     ----
         timestamp (Any): The value of the 'timestamp' field.
 
-    Returns:
-    -------
-        bool: True if valid, False otherwise.
-
-    Args:
-      timestamp: Any:
-
-    Returns:
-
     Parameters
     ----------
     timestamp :
@@ -237,11 +229,16 @@ def _validate_timestamp(timestamp: Any) -> bool:
         Any:
     timestamp :
         Any:
+    timestamp : Any :
+
     timestamp: Any :
 
 
     Returns
     -------
+    Args :
+        timestamp: Any:
+
 
     """
     # Ensure the timestamp is a string
