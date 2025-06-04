@@ -18,11 +18,13 @@ def request_with_timeout(url: str, timeout: int = 10) -> dict[str, Any] | None:
     """Makes a GET request to the specified URL with a specified timeout.
 
     Args:
-        url (str): The URL to request.
-        timeout (int): The timeout in seconds. Defaults to 10 seconds.
+      url(str): The URL to request.
+      timeout(int): The timeout in seconds. Defaults to 10 seconds.
+      url: str: 
+      timeout: int:  (Default value = 10)
 
     Returns:
-        dict[str, Any] | None: The JSON response as a dictionary, or None if a timeout occurred.
+      dict[str, Any] | None: The JSON response as a dictionary, or None if a timeout occurred.
 
     """
     if not url:
