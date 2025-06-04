@@ -24,13 +24,16 @@ def validate_data(data: dict[str, Any]) -> bool:
     :param data: The data to validate.
     :type data: dict[str
     :param data: dict[str:
-    :param Any]: 
+    :param Any: param data: dict[str:
     :param data: dict[str: 
+    :param Any]: 
     :returns: True if data is valid, False otherwise.
     :rtype: bool
     :raises TypeError: If the data is not a dictionary.
+    
     Notes:
     :raises TypeError: If the data is not a dictionary.
+    
     Notes:
     The function logs an error message for each validation failure.
 
@@ -83,8 +86,10 @@ def _validate_symbol(symbol: str) -> bool:
     :param symbol: The value of the 'symbol' field.
     :type symbol: str
     :param symbol: str:
+    :param symbol: str:
     :param symbol: str: 
     :returns: True if valid, False otherwise.
+    
     Notes:
     :rtype: bool
 
@@ -101,8 +106,10 @@ def _validate_price(price: Any) -> bool:
     :param price: The value of the 'price' field.
     :type price: Any
     :param price: Any:
+    :param price: Any:
     :param price: Any: 
     :returns: True if valid, False otherwise.
+    
     Notes:
     :rtype: bool
 
@@ -136,9 +143,9 @@ def _validate_volume(volume: Any) -> bool:
     
     Returns:
 
+    :param volume: Any:
     :param volume: Any: 
 
-    
     """
     if not isinstance(volume, int) or volume < 0:
         logger.error(f"Invalid volume format: {volume}")
@@ -165,9 +172,9 @@ def _validate_timestamp(timestamp: Any) -> bool:
     
     Returns:
 
+    :param timestamp: Any:
     :param timestamp: Any: 
 
-    
     """
     # Ensure the timestamp is a string
     if not isinstance(timestamp, str):

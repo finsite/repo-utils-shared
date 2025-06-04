@@ -31,9 +31,12 @@ def retry_request(
     :param max_retries: The maximum number of retry attempts
     :param delay_seconds: The delay in seconds between retries
     :param func: Callable
-    :param Any: 
-    :param max_retries: int
+    :param Any: param max_retries: int
     :param delay_seconds: int
+    :param func: Callable[[]:
+    :param Any: param *:
+    :param max_retries: int:  (Default value = 3)
+    :param delay_seconds: int:  (Default value = 5)
     :param func: Callable[[]: 
     :param Any]: 
     :param *: 
