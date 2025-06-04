@@ -22,12 +22,11 @@ class RateLimiter:
     
     Allows a specified number of requests within a time window.
 
-    Args:
-      max_requests(int): Maximum allowed requests in the window.
-      time_window(float): The duration of the window in seconds.
-
-    Returns:
-      : None
+    :param max_requests: Maximum allowed requests in the window.
+    :type max_requests: int
+    :param time_window: The duration of the window in seconds.
+    :type time_window: float
+    :returns: None
 
     """
 
@@ -73,11 +72,13 @@ class RateLimiter:
         Returns:
         -------
             None
-
+        
         Args:
           context: str:  (Default value = "RateLimiter")
-
+        
         Returns:
+
+        :param context: str:  (Default value = "RateLimiter")
 
         
         """

@@ -27,22 +27,22 @@ def retry_request(
     raises an exception after the maximum number of retries, it raises that
     exception.
 
-    Args:
-      func: The function to be retried.
-      max_retries: The maximum number of retry attempts. Defaults to 3.
-      delay_seconds: The delay in seconds between retries. Defaults to 5.
-      func: Callable[[]: 
-      Any]: 
-      *: 
-      max_retries: int:  (Default value = 3)
-      delay_seconds: int:  (Default value = 5)
-
-    Returns:
-      The result of the function if successful, or None if all retries fail.
-
+    :param func: The function to be retried
+    :param max_retries: The maximum number of retry attempts
+    :param delay_seconds: The delay in seconds between retries
+    :param func: Callable
+    :param Any: 
+    :param max_retries: int
+    :param delay_seconds: int
+    :param func: Callable[[]: 
+    :param Any]: 
+    :param *: 
+    :param max_retries: int:  (Default value = 3)
+    :param delay_seconds: int:  (Default value = 5)
+    :returns: The result of the function if successful, or None if all retries fail.
+    
     Raises:
       ValueError: If the function to be retried is None.
-      Exception: The last exception encountered if all retries fail.
 
     """
     # Validate the function to be retried
