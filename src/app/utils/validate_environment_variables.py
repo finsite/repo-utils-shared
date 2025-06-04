@@ -38,6 +38,7 @@ def validate_environment_variables(required_variables: list[str]) -> None:
     Returns:
 
     :param required_variables: list[str]:
+    :param required_variables: list[str]:
     :param required_variables: list[str]: 
 
     """
