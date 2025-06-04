@@ -32,6 +32,8 @@ def validate_data(data: dict[str, Any]) -> bool:
     :param data: type data: dict[str :
     :param Any: param data:
     :param data: dict[str:
+    :param data: dict[str:
+    :param Any: returns: True if data is valid, False otherwise.
     :param data: dict[str: 
     :param Any]: 
     :returns: True if data is valid, False otherwise.
@@ -102,6 +104,7 @@ def _validate_symbol(symbol: str) -> bool:
     :param symbol: type symbol: str :
     :param symbol: type symbol: str :
     :param symbol: str:
+    :param symbol: str:
     :param symbol: str: 
     :returns: True if valid, False otherwise.
     :rtype: bool
@@ -127,6 +130,7 @@ def _validate_price(price: Any) -> bool:
     :param price: Any:
     :param price: type price: Any :
     :param price: type price: Any :
+    :param price: Any:
     :param price: Any:
     :param price: Any: 
     :returns: True if valid, False otherwise.
@@ -165,6 +169,7 @@ def _validate_volume(volume: Any) -> bool:
     
     Args:
       volume: Any:
+    :param volume: Any:
     :param volume: Any: 
 
     """
@@ -189,6 +194,7 @@ def _validate_timestamp(timestamp: Any) -> bool:
     :param timestamp: Any:
     :param timestamp: type timestamp: Any :
     :param timestamp: type timestamp: Any :
+    :param timestamp: Any:
     :param timestamp: Any:
     :param timestamp: Any: 
 
