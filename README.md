@@ -3,6 +3,7 @@
 Canonical shared utility modules for Finsite projects.
 
 Includes:
+
 - Vault client
 - Request wrappers
 - Retry logic

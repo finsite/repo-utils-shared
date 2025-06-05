@@ -16,7 +16,7 @@ spec:
         app: repo-utils-shared
     spec:
       containers:
-      - name: repo-utils-shared
-        image: repo-utils-shared:latest
-        ports:
-        - containerPort: 8080
+        - name: repo-utils-shared
+          image: repo-utils-shared:latest
+          ports:
+            - containerPort: 8080
