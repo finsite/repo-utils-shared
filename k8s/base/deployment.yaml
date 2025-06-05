@@ -1,0 +1,22 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: repo-utils-shared
+  labels:
+    app: repo-utils-shared
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: repo-utils-shared
+  template:
+    metadata:
+      labels:
+        app: repo-utils-shared
+    spec:
+      containers:
+      - name: repo-utils-shared
+        image: repo-utils-shared:latest
+        ports:
+        - containerPort: 8080
