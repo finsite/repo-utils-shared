@@ -1,0 +1,24 @@
+# .github/workflows/slsa-provenance.yml
+name: 🔐 SLSA Provenance
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'  # Only run on version tag pushes
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  provenance:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Generate provenance
+        uses: slsa-framework/slsa-github-generator/actions/provenance@v1
+        with:
+          builder-id: https://github.com/${{ github.repository }}/.github/workflows/slsa-provenance.yml@refs/tags/${{ github.ref_name }}
