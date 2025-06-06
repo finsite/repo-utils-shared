@@ -1,5 +1,6 @@
-"""Shared utilities for configuration and services across repositories."""
+"""repo-utils-shared
+
+Shared utility modules and configuration scaffolding for all repositories.
+"""
 
 __version__ = "0.1.0"
-
-__all__ = []
