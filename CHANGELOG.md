@@ -1,3 +1,10 @@
+## v0.1.4 (2025-06-07)
+
+### Fix
+
+- **files**: Verify unique files are in another repository
+- **files**: Verify unique files are in another repository
+
 ## v0.1.3 (2025-06-07)
 
 ### Fix
