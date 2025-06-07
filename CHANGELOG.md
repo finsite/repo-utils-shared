@@ -1,3 +1,9 @@
+## v0.1.6 (2025-06-07)
+
+### Fix
+
+- **files**: Check version consistency script
+
 ## v0.1.5 (2025-06-07)
 
 ### Fix
