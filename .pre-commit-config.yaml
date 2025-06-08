@@ -174,14 +174,22 @@ repos:
       - id: pip-compile-prod
         name: Pip Compile Production Requirements
         language: system
-        entry: pip-compile --upgrade --strip-extras --output-file=requirements.txt
-          requirements.in
+        entry: pip-compile
+        args:
+          - --upgrade
+          - --strip-extras
+          - --output-file=requirements.txt
+          - requirements.in
         files: ^requirements\.in$
       - id: pip-compile-dev
         name: Pip Compile Dev Requirements
         language: system
-        entry: pip-compile --upgrade --strip-extras --output-file=requirements-dev.txt
-          requirements-dev.in
+        entry: pip-compile
+        args:
+          - --upgrade
+          - --strip-extras
+          - --output-file=requirements-dev.txt
+          - requirements-dev.in
         files: ^requirements-dev\.in$
   - repo: local
     hooks:
