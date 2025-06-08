@@ -8,8 +8,7 @@ import os
 from typing import cast
 
 from app.utils.types import OutputMode, PollerType
-from app.utils.vault_client import VaultClient
-from app.utils.vault_client import get_secret_or_env as get_config_value
+from app.utils.vault_client import VaultClient, get_secret_or_env
 
 # Initialize and cache Vault client
 _vault = VaultClient()

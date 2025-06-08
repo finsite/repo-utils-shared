@@ -81,7 +81,7 @@ class VaultClient:
 _vault_client: VaultClient | None = None
 
 
-def get_secret_or_env(key: str, default: str | None = None) -> str:
+def get_secret_or_env(key: str, default: str = "") -> str:
     """Return the secret from Vault or fall back to environment variable.
 
     Args:
@@ -95,4 +95,4 @@ def get_secret_or_env(key: str, default: str | None = None) -> str:
     if _vault_client is None:
         _vault_client = VaultClient()
 
-    return _vault_client.get(key, os.getenv(key, default) or default)
+    return _vault_client.get(key, os.getenv(key, default)) or default
