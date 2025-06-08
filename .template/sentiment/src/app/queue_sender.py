@@ -7,7 +7,7 @@ import pika
 from botocore.exceptions import BotoCoreError, NoCredentialsError
 
 from app import config
-from app.logger import setup_logger
+from app.utils.setup_logger import setup_logger
 
 # Initialize logger
 logger = setup_logger(__name__)

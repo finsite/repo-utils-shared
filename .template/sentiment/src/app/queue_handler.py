@@ -12,7 +12,7 @@ import boto3
 import pika
 from botocore.exceptions import BotoCoreError, NoCredentialsError
 
-from app.logger import setup_logger
+from app.utils.setup_logger import setup_logger
 from app.output_handler import send_to_output
 from app.processor import analyze_sentiment
 
