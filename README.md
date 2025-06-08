@@ -57,4 +57,4 @@ python .hooks/check-version-consistency.py
  Add Semgrep, Markdown lint, and advanced secret scanning
 
  Re-enable tests once implemented
-
+```
