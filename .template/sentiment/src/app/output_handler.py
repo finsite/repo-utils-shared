@@ -1,51 +1,84 @@
-"""Module to handle output of analysis results to a chosen output target.
+"""Module to handle output of analysis results to the configured target.
 
-This implementation logs the result, prints it to stdout, and sends the
-data to RabbitMQ or SQS, unless OUTPUT_MODE is set to 'log'.
+Supports logging, stdout, queue publishing, and future extensibility
+to REST, S3, or database sinks.
 """
 
 import json
-from typing import Any
+from typing import Any, cast
 
-from app import config
-from app.utils.setup_logger import setup_logger
+from app import config_shared
 from app.queue_sender import publish_to_queue
+from app.utils.setup_logger import setup_logger
+from app.utils.types import OutputMode
 
-# Initialize logger
 logger = setup_logger(__name__)
 
 
-def send_to_output(data: dict[str, Any]) -> None:
-    """Outputs processed analysis results to the configured output system.
+def send_to_output(data: list[dict[str, Any]]) -> None:
+    """Route processed output to the configured destination.
 
-    This includes logging the result, printing to console, and
-    sending to RabbitMQ or SQS, unless OUTPUT_MODE is 'log'.
+    Parameters
+    ----------
+    data : list[dict[str, Any]]
+        A list of enriched messages to route.
 
-    :param data: The processed analysis result.
-    :type data: dict[str
-    :param data: dict[str:
-    :param Any: param data: dict[str:
-    :param Any: param data: dict[str:
-    :param Any: param data:
-    :param Any: param data:
-    :param data: dict[str:
-    :param data: dict[str:
-    :param Any: param data: dict[str:
-    :param Any:
-    :param data: dict[str:
-    :param Any]:
+    Raises
+    ------
+    Exception
+        Any exceptions during output handling are caught and logged.
 
     """
     try:
-        formatted_output = json.dumps(data, indent=4)
-        logger.info("Sending data to output:\n%s", formatted_output)
-        print(formatted_output)
+        mode = cast(OutputMode, config_shared.get_output_mode())
 
-        if config.get_output_mode() == "log":
-            logger.info("🔄 OUTPUT_MODE is 'log'; skipping publish to queue.")
-            return
-
-        publish_to_queue([data])
-        logger.info("✅ Output successfully published to queue.")
+        if mode == "log":
+            _output_to_log(data)
+        elif mode == "stdout":
+            _output_to_stdout(data)
+        elif mode == "queue":
+            _output_to_queue(data)
+        elif mode == "rest":
+            _output_to_rest(data)
+        elif mode == "s3":
+            _output_to_s3(data)
+        elif mode == "database":
+            _output_to_database(data)
+        else:
+            logger.warning("⚠️ Unknown output mode: %s — defaulting to log.", mode)
+            _output_to_log(data)
     except Exception as e:
         logger.error("❌ Failed to send output: %s", e)
+
+
+def _output_to_log(data: list[dict[str, Any]]) -> None:
+    """Log data to application logs."""
+    for item in data:
+        logger.info("📝 Processed message:\n%s", json.dumps(item, indent=4))
+
+
+def _output_to_stdout(data: list[dict[str, Any]]) -> None:
+    """Print data to stdout (e.g., console)."""
+    for item in data:
+        print(json.dumps(item, indent=4))
+
+
+def _output_to_queue(data: list[dict[str, Any]]) -> None:
+    """Publish processed data to RabbitMQ or SQS."""
+    publish_to_queue(data)
+    logger.info("✅ Output published to queue: %d message(s)", len(data))
+
+
+def _output_to_rest(data: list[dict[str, Any]]) -> None:
+    """Log stub message for REST output (not yet implemented)."""
+    logger.warning("⚠️ Output mode 'rest' not yet implemented.")
+
+
+def _output_to_s3(data: list[dict[str, Any]]) -> None:
+    """Log stub message for S3 output (not yet implemented)."""
+    logger.warning("⚠️ Output mode 's3' not yet implemented.")
+
+
+def _output_to_database(data: list[dict[str, Any]]) -> None:
+    """Log stub message for database output (not yet implemented)."""
+    logger.warning("⚠️ Output mode 'database' not yet implemented.")

@@ -1,35 +1,36 @@
-"""Module to publish processed analysis data to RabbitMQ or AWS SQS."""
+"""Module to publish processed data to RabbitMQ or AWS SQS.
+
+This module provides a function to publish a list of processed
+data dictionaries to the appropriate queue type (RabbitMQ or SQS),
+based on shared configuration. Each message is retried with exponential
+backoff upon failure.
+"""
 
 import json
+from typing import Any
 
 import boto3
 import pika
 from botocore.exceptions import BotoCoreError, NoCredentialsError
+from pika.exceptions import AMQPConnectionError
+from tenacity import retry, stop_after_attempt, wait_exponential
 
-from app import config
+from app import config_shared
 from app.utils.setup_logger import setup_logger
 
-# Initialize logger
 logger = setup_logger(__name__)
 
 
-def publish_to_queue(payload: list[dict]) -> None:
-    """Publishes processed candlestick analysis results to RabbitMQ or SQS.
+def publish_to_queue(payload: list[dict[str, Any]]) -> None:
+    """Publish processed results to RabbitMQ or SQS.
 
-    :param payload: A list of message payloads to publish.
-    :type payload: list[dict]
-    :param payload: list[dict]:
-    :param payload: list[dict]:
-    :param payload: list[dict]:
-    :param payload: type payload: list[dict] :
-    :param payload: type payload: list[dict] :
-    :param payload: list[dict]:
-    :param payload: list[dict]:
-    :param payload: list[dict]:
-    :param payload: list[dict]:
+    Parameters
+    ----------
+    payload : list[dict[str, Any]]
+        A list of message payloads to publish.
 
     """
-    queue_type = config.get_queue_type()
+    queue_type = config_shared.get_queue_type().lower()
 
     for message in payload:
         if queue_type == "rabbitmq":
@@ -37,68 +38,75 @@ def publish_to_queue(payload: list[dict]) -> None:
         elif queue_type == "sqs":
             _send_to_sqs(message)
         else:
-            logger.error("Invalid QUEUE_TYPE specified: %s", queue_type)
+            logger.error("❌ Invalid QUEUE_TYPE specified: %s", queue_type)
 
 
-def _send_to_rabbitmq(data: dict) -> None:
-    """Sends a single message to RabbitMQ using config-based credentials.
+@retry(stop=stop_after_attempt(3), wait=wait_exponential(min=2, max=10))
+def _send_to_rabbitmq(data: dict[str, Any]) -> None:
+    """Send a single message to RabbitMQ.
 
-    :param data: The message payload to send.
-    :type data: dict
-    :param data: dict:
-    :param data: dict:
-    :param data: dict:
-    :param data: type data: dict :
-    :param data: type data: dict :
-    :param data: dict:
-    :param data: dict:
-    :param data: dict:
-    :param data: dict:
+    Parameters
+    ----------
+    data : dict[str, Any]
+        The message payload to publish.
+
+    Raises
+    ------
+    AMQPConnectionError
+        If connection to RabbitMQ fails.
+    Exception
+        If message publishing fails.
 
     """
     try:
         credentials = pika.PlainCredentials(
-            config.get_rabbitmq_user(), config.get_rabbitmq_password()
+            config_shared.get_rabbitmq_user(), config_shared.get_rabbitmq_password()
         )
         parameters = pika.ConnectionParameters(
-            host=config.get_rabbitmq_host(),
-            port=config.get_rabbitmq_port(),
-            virtual_host=config.get_rabbitmq_vhost(),
+            host=config_shared.get_rabbitmq_host(),
+            port=config_shared.get_rabbitmq_port(),
+            virtual_host=config_shared.get_rabbitmq_vhost(),
             credentials=credentials,
+            blocked_connection_timeout=30,
         )
-        connection = pika.BlockingConnection(parameters)
-        channel = connection.channel()
 
-        channel.basic_publish(
-            exchange=config.get_rabbitmq_exchange(),
-            routing_key=config.get_rabbitmq_routing_key(),
-            body=json.dumps(data),
-        )
-        channel.close()
-        connection.close()
+        with pika.BlockingConnection(parameters) as connection:
+            channel = connection.channel()
+            channel.basic_publish(
+                exchange=config_shared.get_rabbitmq_exchange(),
+                routing_key=config_shared.get_rabbitmq_routing_key(),
+                body=json.dumps(data),
+            )
         logger.info("✅ Published message to RabbitMQ")
+    except AMQPConnectionError as e:
+        logger.exception("❌ RabbitMQ publish connection error: %s", e)
+        raise
     except Exception as e:
-        logger.error("❌ Failed to publish message to RabbitMQ: %s", e)
+        logger.exception("❌ Failed to publish message to RabbitMQ: %s", e)
+        raise
 
 
-def _send_to_sqs(data: dict) -> None:
-    """Sends a single message to AWS SQS using the configured queue.
+@retry(stop=stop_after_attempt(3), wait=wait_exponential(min=2, max=10))
+def _send_to_sqs(data: dict[str, Any]) -> None:
+    """Send a single message to AWS SQS.
 
-    :param data: The message payload to send.
-    :type data: dict
-    :param data: dict:
-    :param data: dict:
-    :param data: dict:
-    :param data: type data: dict :
-    :param data: type data: dict :
-    :param data: dict:
-    :param data: dict:
-    :param data: dict:
-    :param data: dict:
+    Parameters
+    ----------
+    data : dict[str, Any]
+        The message payload to publish.
+
+    Raises
+    ------
+    BotoCoreError
+        If the boto3 client fails to initialize.
+    NoCredentialsError
+        If credentials are not available.
+    Exception
+        If message publishing fails.
 
     """
-    sqs_url = config.get_sqs_queue_url()
-    region = config.get_sqs_region()
+    sqs_url = config_shared.get_sqs_queue_url()
+    region = config_shared.get_sqs_region()
 
     try:
         sqs_client = boto3.client("sqs", region_name=region)
@@ -106,8 +114,10 @@ def _send_to_sqs(data: dict) -> None:
             QueueUrl=sqs_url,
             MessageBody=json.dumps(data),
         )
-        logger.info("✅ Published message to SQS, MessageId: %s", response["MessageId"])
+        logger.info("✅ Published message to SQS (MessageId: %s)", response.get("MessageId"))
     except (BotoCoreError, NoCredentialsError) as e:
-        logger.error("❌ Failed to initialize SQS client: %s", e)
+        logger.exception("❌ Failed to initialize SQS client: %s", e)
+        raise
     except Exception as e:
-        logger.error("❌ Failed to publish message to SQS: %s", e)
+        logger.exception("❌ Failed to publish message to SQS: %s", e)
+        raise

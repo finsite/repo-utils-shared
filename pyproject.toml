@@ -8,9 +8,9 @@ dynamic = ["version"]
 description = "A template for the repo-utiils-shared python project"
 readme = "README.md"
 requires-python = ">=3.9"
-license = { text = "Apache-2.0" }
+license = {text = "Apache-2.0"}
 authors = [
-  { name = "mark quinn", email = "mobious_99@yahoo.com" }
+  {name = "mark quinn", email = "mobious_99@yahoo.com"}
 ]
 keywords = ["python", "stock", "data", "polling"]
 classifiers = [
@@ -43,15 +43,6 @@ test = [
   "pytest-cov>=4.0"
 ]
 
-[tool.setuptools]
-package-dir = { "" = "src" }
-
-[tool.setuptools.packages.find]
-where = ["src"]
-
-[tool.setuptools.package-data]
-"*" = ["data/*.txt", "templates/*.html"]
-
 [tool.black]
 line-length = 100
 target-version = ["py39", "py310", "py311"]
@@ -66,14 +57,65 @@ exclude = '''
   | dist
 )/'''
 
-[tool.ruff]
-line-length = 100
-target-version = "py311"
-exclude = ["tests", "build", "dist", ".venv", ".eggs"]
+[tool.commitizen]
+name = "cz_conventional_commits"
+version = "0.1.6"
+tag_format = "v$version"
+update_changelog_on_bump = true
+changelog_file = "CHANGELOG.md"
+bump_message = "chore(release): v$current_version → v$new_version"
+major_version_zero = true
+version_files = [
+  "src/app/__init__.py"
+]
 
-[tool.ruff.lint]
-extend-select = ["D"]
-ignore = ["D203", "D211", "D213", "D401", "D205"]
+[tool.commitizen.customize]
+info.title = "Conventional Commits"
+info.description = "Standardized commit format across stock-* repos"
+info.message = "Write your commit message using the prompts below:"
+info.example = "feat(queue): support fallback from SQS to RabbitMQ"
+
+[tool.commitizen.customize.scopes]
+pollers = ""
+config = ""
+vault = ""
+queue = ""
+main = ""
+metrics = ""
+tests = ""
+lint = ""
+types = ""
+ci = ""
+docker = ""
+deps = ""
+docs = ""
+versioning = ""
+template = ""
+init = ""
+release = ""
+
+[tool.commitizen.customize.types]
+feat = "✨ A new feature"
+fix = "🐛 A bug fix"
+chore = "🔧 Build process, tooling, maintenance"
+docs = "📝 Documentation only changes"
+refactor = "♻️ Code refactoring without behavior change"
+style = "🎨 Code formatting, whitespace, etc."
+test = "✅ Adding or updating tests"
+ci = "🔁 CI/CD pipeline changes"
+build = "📦 Changes to packaging/build system"
+
+[tool.coverage.html]
+directory = "htmlcov"
+show_contexts = true
+
+[tool.coverage.report]
+show_missing = true
+skip_covered = true
+
+[tool.coverage.run]
+branch = true
+source = ["src"]
 
 [tool.isort]
 profile = "black"
@@ -94,62 +136,20 @@ minversion = "7.0"
 addopts = "--strict-markers --tb=short -q"
 testpaths = ["tests"]
 
-[tool.coverage.html]
-directory = "htmlcov"
-show_contexts = true
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+exclude = ["tests", "build", "dist", ".venv", ".eggs"]
 
-[tool.coverage.run]
-branch = true
-source = ["src"]
+[tool.ruff.lint]
+extend-select = ["D"]
+ignore = ["D203", "D211", "D213", "D401", "D205"]
 
-[tool.coverage.report]
-show_missing = true
-skip_covered = true
+[tool.setuptools]
+package-dir = {"" = "src"}
 
-[tool.commitizen]
-name = "cz_conventional_commits"
-version = "0.1.6"
-tag_format = "v$version"
-update_changelog_on_bump = true
-changelog_file = "CHANGELOG.md"
-bump_message = "chore(release): v$current_version → v$new_version"
-major_version_zero = true
-version_files = [
-  "src/app/__init__.py"
-]
+[tool.setuptools.package-data]
+"*" = ["data/*.txt", "templates/*.html"]
 
-[tool.commitizen.customize]
-info.title = "Conventional Commits"
-info.description = "Standardized commit format across stock-* repos"
-info.message = "Write your commit message using the prompts below:"
-info.example = "feat(queue): support fallback from SQS to RabbitMQ"
-
-[tool.commitizen.customize.types]
-feat = "✨ A new feature"
-fix = "🐛 A bug fix"
-chore = "🔧 Build process, tooling, maintenance"
-docs = "📝 Documentation only changes"
-refactor = "♻️ Code refactoring without behavior change"
-style = "🎨 Code formatting, whitespace, etc."
-test = "✅ Adding or updating tests"
-ci = "🔁 CI/CD pipeline changes"
-build = "📦 Changes to packaging/build system"
-
-[tool.commitizen.customize.scopes]
-pollers = ""
-config = ""
-vault = ""
-queue = ""
-main = ""
-metrics = ""
-tests = ""
-lint = ""
-types = ""
-ci = ""
-docker = ""
-deps = ""
-docs = ""
-versioning = ""
-template = ""
-init = ""
-release = ""
+[tool.setuptools.packages.find]
+where = ["src"]
