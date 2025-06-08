@@ -9,6 +9,7 @@ from typing import cast
 
 from app.utils.types import OutputMode, PollerType
 from app.utils.vault_client import VaultClient
+from app.utils.vault_client import get_secret_or_env as get_config_value
 
 # Initialize and cache Vault client
 _vault = VaultClient()
@@ -249,3 +250,96 @@ def get_symbols() -> list[str]:
     """List of symbols to fetch data for, from comma-separated string."""
     symbols = get_config_value("SYMBOLS", "")
     return [s.strip() for s in symbols.split(",") if s.strip()]
+
+
+# === Alpha Vantage ===
+def get_alpha_vantage_api_key() -> str:
+    """Returns the API key for Alpha Vantage from Vault or environment."""
+    return get_secret_or_env("ALPHA_VANTAGE_API_KEY")
+
+
+def get_alpha_vantage_fill_rate_limit() -> int:
+    """Returns the per-second fill rate limit for Alpha Vantage."""
+    return int(get_secret_or_env("ALPHA_VANTAGE_FILL_RATE_LIMIT", default="60"))
+
+
+# === Finnhub ===
+def get_finnhub_api_key() -> str:
+    """Returns the API key for Finnhub from Vault or environment."""
+    return get_secret_or_env("FINNHUB_API_KEY")
+
+
+def get_finnhub_fill_rate_limit() -> int:
+    """Returns the per-second fill rate limit for Finnhub."""
+    return int(get_secret_or_env("FINNHUB_FILL_RATE_LIMIT", default="60"))
+
+
+# === Polygon ===
+def get_polygon_api_key() -> str:
+    """Returns the API key for Polygon.io from Vault or environment."""
+    return get_secret_or_env("POLYGON_API_KEY")
+
+
+def get_polygon_fill_rate_limit() -> int:
+    """Returns the per-second fill rate limit for Polygon.io."""
+    return int(get_secret_or_env("POLYGON_FILL_RATE_LIMIT", default="60"))
+
+
+# === Yahoo Finance via RapidAPI ===
+def get_rapidapi_key() -> str:
+    """Returns the RapidAPI key for Yahoo Finance API access."""
+    return get_secret_or_env("RAPIDAPI_KEY")
+
+
+def get_rapidapi_host() -> str:
+    """Returns the RapidAPI host string for Yahoo Finance."""
+    return get_secret_or_env("RAPIDAPI_HOST", default="yahoo-finance15.p.rapidapi.com")
+
+
+def get_yfinance_fill_rate_limit() -> int:
+    """Returns the per-second fill rate limit for Yahoo Finance via RapidAPI."""
+    return int(get_secret_or_env("YFINANCE_FILL_RATE_LIMIT", default="60"))
+
+
+# === Intrinio ===
+def get_intrinio_key() -> str:
+    """Returns the API key for Intrinio from Vault or environment."""
+    return get_secret_or_env("INTRINIO_API_KEY")
+
+
+def get_intrinio_fill_rate_limit() -> int:
+    """Returns the per-second fill rate limit for Intrinio."""
+    return int(get_secret_or_env("INTRINIO_FILL_RATE_LIMIT", default="60"))
+
+
+# === Quandl ===
+def get_quandl_api_key() -> str:
+    """Returns the API key for Quandl from Vault or environment."""
+    return get_secret_or_env("QUANDL_API_KEY")
+
+
+def get_quandl_fill_rate_limit() -> int:
+    """Returns the per-second fill rate limit for Quandl."""
+    return int(get_secret_or_env("QUANDL_FILL_RATE_LIMIT", default="60"))
+
+
+# === IEX Cloud ===
+def get_iex_api_key() -> str:
+    """Returns the API key for IEX Cloud from Vault or environment."""
+    return get_secret_or_env("IEX_API_KEY")
+
+
+def get_iex_fill_rate_limit() -> int:
+    """Returns the per-second fill rate limit for IEX Cloud."""
+    return int(get_secret_or_env("IEX_FILL_RATE_LIMIT", default="60"))
+
+
+# === Finnazon ===
+def get_finnazon_key() -> str:
+    """Returns the API key for Finnazon from Vault or environment."""
+    return get_secret_or_env("FINNAZON_API_KEY")
+
+
+def get_finnazon_fill_rate_limit() -> int:
+    """Returns the per-second fill rate limit for Finnazon."""
+    return int(get_secret_or_env("FINNAZON_FILL_RATE_LIMIT", default="60"))

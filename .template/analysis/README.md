@@ -1,6 +1,7 @@
 # Stock Analysis Engine
 
-This repository processes raw market data and produces actionable insights or computed indicators using technical, quantitative, or alternative methods.
+This repository processes raw market data and produces actionable insights or computed indicators
+using technical, quantitative, or alternative methods.
 
 ## Features
 
@@ -33,12 +34,12 @@ make run
 
 ## Environment Variables
 
-| Variable               | Description                          |
-|------------------------|--------------------------------------|
-| `QUEUE_TYPE`           | Input source: `rabbitmq` or `sqs`    |
-| `OUTPUT_TYPE`          | Output mode: `db`, `queue`, `rest`   |
-| `VAULT_ADDR`           | Vault server address                 |
-| `VAULT_TOKEN`          | Vault token or AppRole auth config   |
+| Variable      | Description                        |
+| ------------- | ---------------------------------- |
+| `QUEUE_TYPE`  | Input source: `rabbitmq` or `sqs`  |
+| `OUTPUT_TYPE` | Output mode: `db`, `queue`, `rest` |
+| `VAULT_ADDR`  | Vault server address               |
+| `VAULT_TOKEN` | Vault token or AppRole auth config |
 
 ## Development
 

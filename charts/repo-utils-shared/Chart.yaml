@@ -4,4 +4,4 @@ name: repo-utils-shared
 description: A Helm chart for repo-utils-shared
 type: application
 version: 0.1.0
-appVersion: '1.0'
+appVersion: "1.0"

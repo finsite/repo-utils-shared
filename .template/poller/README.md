@@ -1,6 +1,7 @@
 # Stock Data Poller
 
-This repository collects raw stock-related data from various sources and publishes it to a message queue for downstream analysis or storage.
+This repository collects raw stock-related data from various sources and publishes it to a message
+queue for downstream analysis or storage.
 
 ## Features
 
@@ -34,14 +35,14 @@ make run
 
 ## Environment Variables
 
-| Variable               | Description                         |
-|------------------------|-------------------------------------|
-| `QUEUE_TYPE`           | Either `rabbitmq` or `sqs`          |
-| `RABBITMQ_URL`         | URL for RabbitMQ                    |
-| `SQS_QUEUE_URL`        | AWS SQS queue URL                   |
-| `VAULT_ADDR`           | Vault server address                |
-| `VAULT_TOKEN`          | Vault token or AppRole auth config  |
-| `POLLING_INTERVAL`     | How often to poll (in seconds)      |
+| Variable           | Description                        |
+| ------------------ | ---------------------------------- |
+| `QUEUE_TYPE`       | Either `rabbitmq` or `sqs`         |
+| `RABBITMQ_URL`     | URL for RabbitMQ                   |
+| `SQS_QUEUE_URL`    | AWS SQS queue URL                  |
+| `VAULT_ADDR`       | Vault server address               |
+| `VAULT_TOKEN`      | Vault token or AppRole auth config |
+| `POLLING_INTERVAL` | How often to poll (in seconds)     |
 
 ## Development
 

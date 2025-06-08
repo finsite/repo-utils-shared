@@ -7,8 +7,7 @@
   - `.template/analysis/`
   - `.template/db/`
   - `.template/ui/`
-- [x] Finalize reusable `Makefile`, `.pre-commit-config.yaml`, and
-      `pyproject.toml` fragments.
+- [x] Finalize reusable `Makefile`, `.pre-commit-config.yaml`, and `pyproject.toml` fragments.
 - [x] Fix all existing pre-commit hook issues across templates.
 - [x] Add synced `.gitattributes`, `.gitignore`, `.dockerignore` files.
 

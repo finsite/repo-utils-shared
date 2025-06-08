@@ -1,6 +1,7 @@
 # Stock Data Writer (Database)
 
-This repository receives processed or raw stock data via a queue and writes it to a durable database backend such as PostgreSQL or InfluxDB.
+This repository receives processed or raw stock data via a queue and writes it to a durable database
+backend such as PostgreSQL or InfluxDB.
 
 ## Features
 
@@ -33,13 +34,13 @@ make run
 
 ## Environment Variables
 
-| Variable               | Description                         |
-|------------------------|-------------------------------------|
-| `QUEUE_TYPE`           | `rabbitmq` or `sqs`                 |
-| `DB_TYPE`              | `postgres` or `influx`              |
-| `DB_URL`               | Full connection string              |
-| `VAULT_ADDR`           | Vault server address                |
-| `VAULT_TOKEN`          | Vault token or AppRole config       |
+| Variable      | Description                   |
+| ------------- | ----------------------------- |
+| `QUEUE_TYPE`  | `rabbitmq` or `sqs`           |
+| `DB_TYPE`     | `postgres` or `influx`        |
+| `DB_URL`      | Full connection string        |
+| `VAULT_ADDR`  | Vault server address          |
+| `VAULT_TOKEN` | Vault token or AppRole config |
 
 ## Development
 
