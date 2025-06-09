@@ -1,3 +1,9 @@
+## v0.2.0 (2025-06-09)
+
+### Feat
+
+- finalize shared config and synchronize
+
 ## v0.1.7 (2025-06-08)
 
 ### Fix
