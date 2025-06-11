@@ -44,7 +44,6 @@ def retry_request(
         If the function passed is None.
     Exception
         If all retry attempts fail, the last exception is re-raised.
-
     """
     if func is None:
         raise ValueError("The function to be retried cannot be None")

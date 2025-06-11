@@ -1,7 +1,7 @@
 # Stock Data Poller
 
-This repository collects raw stock-related data from various sources and publishes it to a message
-queue for downstream analysis or storage.
+This repository collects raw stock-related data from various sources and
+publishes it to a message queue for downstream analysis or storage.
 
 ## Features
 

@@ -1,8 +1,11 @@
 """
 Shared fixtures for tests
 """
-import pytest
+
 from unittest.mock import MagicMock
+
+import pytest
+
 
 @pytest.fixture(autouse=True)
 def mock_env(monkeypatch):

@@ -1,8 +1,11 @@
 """
 Unit tests for queue_handler.py
 """
-from unittest.mock import patch, MagicMock
+
+from unittest.mock import MagicMock, patch
+
 from app.queue_handler import consume_messages
+
 
 @patch("app.queue_handler.config.get_queue_type", return_value="rabbitmq")
 @patch("app.queue_handler.pika.BlockingConnection")

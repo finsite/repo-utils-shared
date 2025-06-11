@@ -1,6 +1,7 @@
-"""repo-utils-shared
+"""repo-utils-shared.
 
-Shared utility modules and configuration scaffolding for all repositories.
+Shared utility modules and configuration scaffolding for all
+repositories.
 """
 
 __version__ = "0.2.0"

@@ -24,7 +24,6 @@ class RateLimiter:
         Maximum allowed requests in the time window.
     time_window : float
         Duration of the window in seconds.
-
     """
 
     def __init__(self, max_requests: int, time_window: float) -> None:
@@ -38,7 +37,6 @@ class RateLimiter:
             Maximum number of requests allowed in the time window.
         time_window : float
             Duration of the time window in seconds.
-
         """
         self._max_requests = max_requests
         self._time_window = time_window
@@ -55,7 +53,6 @@ class RateLimiter:
         ----------
         context : str, optional
             Optional context for logging (e.g., poller type). Defaults to "RateLimiter".
-
         """
         with self._lock:
             current_time: float = time.time()

@@ -20,7 +20,6 @@ def track_polling_metrics(status: Literal["success", "failure"], source: str, sy
         status: Whether the polling was a "success" or "failure".
         source: The source system of the poll (e.g., "news", "price").
         symbol: The stock or asset symbol being polled.
-
     """
     # Validate status
     if status not in {"success", "failure"}:

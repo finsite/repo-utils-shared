@@ -1,33 +1,37 @@
 """Configure and return a logger for the application.
 
-Supports optional structured (JSON-style) logging for production environments.
+Supports optional structured (JSON-style) logging for production
+environments.
 """
 
-import logging
 import json
-from typing import Any, Optional
+import logging
 
 
 class StructuredFormatter(logging.Formatter):
     """Structured log formatter that outputs logs as JSON strings."""
 
     def format(self, record: logging.LogRecord) -> str:
+        """Format a log record as a JSON string."""
         log_record = {
             "timestamp": self.formatTime(record, self.datefmt),
             "level": record.levelname,
             "logger": record.name,
             "message": record.getMessage(),
+            "module": record.module,
+            "filename": record.filename,
+            "funcName": record.funcName,
+            "lineno": record.lineno,
         }
         return json.dumps(log_record)
 
 
 def setup_logger(
-    name: Optional[str] = None,
+    name: str | None = None,
     level: int = logging.INFO,
     structured: bool = False,
 ) -> logging.Logger:
-    """
-    Configure and return a logger for the application.
+    """Configure and return a logger for the application.
 
     Args:
         name (Optional[str]): Name of the logger.
@@ -47,9 +51,7 @@ def setup_logger(
         if structured:
             formatter = StructuredFormatter()
         else:
-            formatter = logging.Formatter(
-                "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
-            )
+            formatter = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s")
 
         handler.setFormatter(formatter)
         logger.addHandler(handler)
