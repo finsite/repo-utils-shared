@@ -1,7 +1,7 @@
-"""Main entry point for Stock-Tech-Ichimoku.
+"""Main entry point for the service.
 
-Starts the Ichimoku Cloud analysis service by consuming messages
-from the configured message queue and processing them for analysis output.
+This script initializes logging, loads the queue consumer, and begins
+consuming data using the configured processing callback.
 """
 
 import os
@@ -10,19 +10,27 @@ import sys
 # Add 'src/' to Python's module search path
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
-from app import __version__
+from app import config_shared
+from app.output_handler import send_to_output
 from app.queue_handler import consume_messages
 from app.utils.setup_logger import setup_logger
 
-# Initialize logger
-logger = setup_logger(__name__)
-logger.info("🏁 Starting Ichimoku Cloud Analysis Service (v%s)", __version__)
+# Initialize the module-level logger with optional structured logging
+logger = setup_logger(
+    __name__,
+    structured=config_shared.get_config_bool("STRUCTURED_LOGGING", False),
+)
 
 
 def main() -> None:
-    """Main entry point of the Ichimoku Cloud Analysis Service."""
-    consume_messages()
+    """Start the data processing service."""
+    logger.info("🚀 Starting processing service...")
+    consume_messages(send_to_output)
 
 
 if __name__ == "__main__":
-    main()
+    try:
+        main()
+    except Exception as e:
+        logger.exception("❌ Unhandled exception in main: %s", e)
+        sys.exit(1)
