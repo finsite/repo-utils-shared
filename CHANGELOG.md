@@ -1,3 +1,9 @@
+## v0.3.0 (2025-06-11)
+
+### Feat
+
+- finalize template test files and infra generation script
+
 ## v0.2.3 (2025-06-11)
 
 ### Fix
