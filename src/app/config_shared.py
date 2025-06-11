@@ -26,6 +26,7 @@ def get_config_value(key: str, default: str | None = None) -> str:
 
     Raises:
         ValueError: If no value is found and no default is provided.
+
     """
     val = _vault.get(key, os.getenv(key))
     if val is None:
@@ -46,6 +47,7 @@ def get_config_bool(key: str, default: bool = False) -> bool:
 
     Returns:
         Parsed boolean from config string.
+
     """
     val = get_config_value(key, str(default)).strip().lower()
     return val in {"1", "true", "yes", "on"}
@@ -87,6 +89,7 @@ def get_output_mode() -> OutputMode:
 
     Raises:
         ValueError: If the mode is invalid.
+
     """
     raw_value = get_config_value("OUTPUT_MODE", "queue").lower()
     try:

@@ -1,6 +1,7 @@
 # stock-data-<source>
 
-This repository polls data from a specific provider and publishes it to a message queue.
+This repository polls data from a specific provider and publishes it to a
+message queue.
 
 ## Usage
 

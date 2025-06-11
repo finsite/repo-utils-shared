@@ -18,11 +18,13 @@ logger = setup_logger(__name__)
 
 class VaultClient:
     """Handles interaction with HashiCorp Vault using AppRole
-    authentication."""
+    authentication.
+    """
 
     def __init__(self) -> None:
         """Initialize the VaultClient with environment variables and
-        authenticate."""
+        authenticate.
+        """
         self.vault_addr = os.getenv("VAULT_ADDR", "http://127.0.0.1:8200")
         self.role_id = os.getenv("VAULT_ROLE_ID")
         self.secret_id = os.getenv("VAULT_SECRET_ID")
@@ -36,7 +38,8 @@ class VaultClient:
 
     def _authenticate(self) -> None:
         """Authenticate to Vault using AppRole credentials from the
-        environment."""
+        environment.
+        """
         if not self.role_id or not self.secret_id:
             logger.warning("🔐 VAULT_ROLE_ID or VAULT_SECRET_ID not set — skipping Vault load.")
             return
@@ -78,6 +81,7 @@ class VaultClient:
 
         Returns:
             The secret value or the default.
+
         """
         return self.secrets.get(key, default)
 
@@ -94,6 +98,7 @@ def get_secret_or_env(key: str, default: str = "") -> str:
 
     Returns:
         The secret value or the fallback/default.
+
     """
     global _vault_client
     if _vault_client is None:

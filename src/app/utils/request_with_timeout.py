@@ -33,6 +33,7 @@ def request_with_timeout(url: str, timeout: int = 10) -> dict[str, Any] | None:
     ------
     ValueError
         If the URL is empty.
+
     """
     if not url:
         logger.error("URL cannot be empty.")

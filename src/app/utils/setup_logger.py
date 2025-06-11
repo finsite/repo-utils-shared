@@ -40,6 +40,7 @@ def setup_logger(
 
     Returns:
         logging.Logger: A configured logger instance.
+
     """
     logger_name = name or "poller"
     logger = logging.getLogger(logger_name)
