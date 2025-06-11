@@ -1,3 +1,9 @@
+## v0.2.3 (2025-06-11)
+
+### Fix
+
+- **dependabot**: Include pip dependancy checks
+
 ## v0.2.2 (2025-06-11)
 
 ### Fix
