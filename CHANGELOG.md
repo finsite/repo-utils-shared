@@ -1,3 +1,9 @@
+## v0.2.2 (2025-06-11)
+
+### Fix
+
+- **templates**: verify template structure and fix issues with main.py
+
 ## v0.2.1 (2025-06-11)
 
 ### Fix
