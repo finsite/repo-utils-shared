@@ -3,8 +3,9 @@ Unit tests for vault_client.py
 """
 
 import os
-import pytest
 from unittest.mock import patch
+
+import pytest
 
 from app.utils.vault_client import get_secret_from_vault
 

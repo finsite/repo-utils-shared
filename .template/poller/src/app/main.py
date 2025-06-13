@@ -37,7 +37,9 @@ def main() -> None:
     structured = config_shared.get_config_bool("STRUCTURED_LOGGING", False)
 
     # Set up logger
-    logger = setup_logger(__name__, level=LOG_LEVEL_MAP.get(log_level.lower(), logging.INFO), structured=structured)
+    logger = setup_logger(
+        __name__, level=LOG_LEVEL_MAP.get(log_level.lower(), logging.INFO), structured=structured
+    )
 
     # Initialize components
     rate_limiter = RateLimiter(max_requests=rate_limit, time_window=1)
