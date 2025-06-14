@@ -98,3 +98,18 @@
 - [ ] Confirm monitoring dashboards are functional for all critical services
 - [ ] Ensure all production deployments can be built via Helm + ArgoCD end-to-end
 - [ ] Add staging namespace verification and smoke tests
+
+
+## 8. CI Workflow Fixes and Badge Readiness
+
+- [ ] Audit all `.github/workflows/` in each repo to confirm:
+  - `lint.yaml`
+  - `test.yaml`
+  - `dependency-audit.yaml`
+  - `security-audit.yaml` (optional)
+- [ ] Fix any failing workflows and confirm they work across repo types
+- [ ] Validate workflows are compatible with Makefile targets (`make lint`, `make test`, etc.)
+- [ ] Ensure Python matrix matches `pyproject.toml` (e.g., 3.10, 3.11)
+- [ ] Add CI status badges to `.template/<type>/README.md` (after all workflows are validated)
+- [ ] Confirm that GitHub Actions runs mirror pre-commit hooks
+- [ ] Add test matrix coverage per repo type where possible (poller, db, analysis, etc.)
