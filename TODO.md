@@ -1,132 +1,182 @@
-# TODO for `repo-utils-shared`
+# 📌 Project TODO: Stock-* Poller & Analysis Engine
 
-## 1. Shared Template Maintenance
+This TODO list outlines the remaining work to finalize the `stock-*` repositories, ensuring all pollers and processors are production-grade, consistent, and maintainable.
 
-- [x] Centralize `.template/` directories by project type:
-  - `.template/poller/`
-  - `.template/analysis/`
-  - `.template/db/`
-  - `.template/ui/`
-  - `.template/crypto/`
-  - `.template/backtest/`
-  - `.template/data/`
-- [x] Finalize reusable `Makefile`, `.pre-commit-config.yaml`, and
-      `pyproject.toml` fragments.
-- [x] Fix all existing pre-commit hook issues across templates.
-- [x] Add synced `.gitattributes`, `.gitignore`, `.dockerignore` files.
+---
 
-## 2. Pre-commit Enhancements
+## ✅ Core Functionality
 
-- [x] Enable strict formatting, linting, and type checking.
-- [x] Resolve `pip-compile` and dependency resolver behavior.
-- [x] Disable `check-pyproject` due to incompatible constraints.
-- [x] Finalize Ruff, Black, Bandit, Pyright, and Pip Audit configuration.
-- [x] Add `check-version-consistency` to ensure changelog and version sync.
+- [ ] Ensure poller loads:
+  - [ ] Symbols from configuration
+  - [ ] API keys from Vault or environment
+  - [ ] Correct poller/processor module for the strategy
+- [ ] Add CLI flags or health check endpoints
+- [ ] Add dry-run/test mode for output verification
 
-### 🆕 Optional Enterprise-Grade Enhancements (to be implemented)
+---
 
-- [ ] Add REUSE license header compliance (`reuse lint`)
-- [ ] Add advanced secret scanning (`detect-secrets`)
-- [ ] Add SBOM generation + validation (`cyclonedx-bom`, `syft`)
-- [ ] Add advanced static analysis (`semgrep`)
-- [ ] Add Markdown linting (`markdownlint-cli`)
-- [ ] Re-enable `pytest` and `pytest-cov` hooks with coverage enforcement
-- [ ] Mirror all pre-commit checks in GitHub Actions CI
+## 🔐 Vault Integration
 
-## 3. Scripts and Sync Utilities
+- [ ] Auto-initialize Vault secrets in dev/staging
+- [ ] One policy per poller/processor
+- [ ] Vault fallback to env vars (with warnings)
+- [ ] Log all failed or missing Vault lookups
 
-- [x] Create `sync.py` with `--apply` and `sync.log` functionality.
-- [x] Add `check-version-consistency.py` for version syncing.
-- [x] Ensure scripts are executable and documented in README.
-- [x] Ensure `template_python` receives correct `.template/base/src` sync
-- [ ] Add `.template/crypto/`, `.template/backtest/`, and `.template/data/` sync
-      logic
-- [ ] Update `sync.py` to assign proper types to crypto, backtest, and data
-      repositories
-- [ ] Add test method to detect if synced `src/` or `tests/` content changes are
-      correctly applied
+---
 
-## 4. Documentation
+## 📨 Messaging (RabbitMQ / SQS)
 
-- [x] Add `README.md` with usage overview and sync instructions.
-- [ ] Add examples of how to integrate `.template` scaffolding into new repos.
-- [ ] Ensure all `README.md` and `TODO.md` files are synced and type-specific
-- [ ] Add centralized README/TODO sync rules per repo type (poller, db,
-      analysis, sentiment, crypto, backtest, data)
+- [ ] Ensure all pollers:
+  - [ ] Use `queue_sender.py` + `queue_handler.py`
+  - [ ] Use `get_queue_type()` and RabbitMQ/SQS fallback logic
+- [ ] Add retry logic + exponential backoff
+- [ ] Add metrics for:
+  - [ ] Publish latency
+  - [ ] Queue delivery success/fail
+- [ ] Validate metrics hooks (`track_polling_metrics`, `track_request_metrics`)
 
-## 5. Repository Readiness and Coverage
+---
 
-- [ ] Create missing `stock-crypto-*` repositories:
-  - `stock-crypto-prices`
-  - `stock-crypto-news`
-  - `stock-crypto-metrics`
-  - `stock-crypto-sentiment`
-  - `stock-crypto-arbitrage`
-- [ ] Create missing `stock-backtest-*` repositories:
-  - `stock-backtest-engine`
-  - `stock-backtest-strategies`
-- [ ] Create missing `stock-data-*` repositories:
-  - `stock-data-cleanser`
-  - `stock-data-transformer`
-- [ ] Create missing `stock-db-*` repositories:
-  - `stock-db-migration`
-  - `stock-db-writer-test`
-- [ ] Ensure `template_python` is populated and validated
-- [ ] Add unit tests per repo under `tests/app/` with Pytest support
-- [ ] Ensure all `main.py` scripts run without error and provide structured
-      logging
-- [ ] Validate each `config.py` contains shared config hooks and poller-specific
-      logic
-- [ ] Confirm logging to file or stdout, JSON logging where relevant
-- [ ] Ensure metrics are exposed for Prometheus
-- [ ] Add DLQ handlers per queue type
-- [ ] Validate that test processors and main pipelines support batch and
-      single-message operation
-- [ ] Ensure all `types.py` and `processor.py` files are production-grade and
-      validated
-- [ ] Ensure `stock-backtest-*`, `stock-data-*`, and `stock-crypto-*` repos
-      inherit correct scaffolding and logging/test infra
+## ⚙️ Configuration Standardization
 
-## 6. Infrastructure Production Readiness
+- [ ] Use `config.py` in all repos with:
+  - [ ] `get_polling_interval()`
+  - [ ] `get_batch_size()`
+  - [ ] `get_rabbitmq_queue()` and routing helpers
+- [ ] Log missing or defaulted config keys
+- [ ] Validate config with test runner
+- [ ] Support JSON/INI overrides optionally
 
-- [ ] Add Helm chart scaffolding for all app types (poller, db, analysis,
-      crypto, ui, data, backtest)
-- [ ] Create ArgoCD app manifests per repository for GitOps deployment
-- [ ] Confirm RabbitMQ config matches queue/exchange setup from Docker Compose
-- [ ] Validate PostgreSQL/InfluxDB schemas with full initialization logic
-- [ ] Include monitoring stack (Prometheus + Grafana) with service dashboards
-- [ ] Implement health checks and readiness probes in Kubernetes templates
-- [ ] Add Vault secret injection via Kubernetes sidecar or CSI provider
-- [ ] Ensure all Helm charts include ingress, autoscaling, persistence, and
-      toleration options
-- [ ] Add GitOps tooling and CI/CD checks for drift, Helm diff, and Argo sync
-      status
-- [ ] Add secrets + config sync logic via SOPS or Vault for staging/production
+---
 
-## 7. Final Verification
+## 🧪 Testing & Validation
 
-- [ ] Run `sync.py` and verify no diffs
-- [ ] Validate `pre-commit` hooks pass in every repo
-- [ ] Ensure one integration test runs per repo type (poller, db, analysis,
-      crypto, ui, data, backtest)
-- [ ] Confirm monitoring dashboards are functional for all critical services
-- [ ] Ensure all production deployments can be built via Helm + ArgoCD
-      end-to-end
-- [ ] Add staging namespace verification and smoke tests
+- [ ] Test coverage >90%:
+  - [ ] Poller startup + shutdown
+  - [ ] Message parsing
+  - [ ] Vault + config fallbacks
+- [ ] Add `tests/integration/` runner
+- [ ] Mock API calls for:
+  - [ ] Rate limits
+  - [ ] Timeout handling
+  - [ ] Malformed response handling
+- [ ] Validate structured logging format in tests
+- [ ] Add test cases for Vault fallback behavior
+- [ ] Add fuzz tests for malformed API responses
+- [ ] Add coverage reports to CI with threshold enforcement
 
-## 8. CI Workflow Fixes and Badge Readiness
+---
 
-- [ ] Audit all `.github/workflows/` in each repo to confirm:
-  - `lint.yaml`
-  - `test.yaml`
-  - `dependency-audit.yaml`
-  - `security-audit.yaml` (optional)
-- [ ] Fix any failing workflows and confirm they work across repo types
-- [ ] Validate workflows are compatible with Makefile targets (`make lint`,
-      `make test`, etc.)
-- [ ] Ensure Python matrix matches `pyproject.toml` (e.g., 3.10, 3.11)
-- [ ] Add CI status badges to `.template/<type>/README.md` (after all workflows
-      are validated)
-- [ ] Confirm that GitHub Actions runs mirror pre-commit hooks
-- [ ] Add test matrix coverage per repo type where possible (poller, db,
-      analysis, etc.)
+## 🧠 Caching & Optimization
+
+- [ ] Enable LRU caching for symbol configs
+- [ ] Consider Redis or in-memory cache where useful
+- [ ] Use batch API requests where supported
+- [ ] Profile slow pollers (e.g., using `cProfile` or `pyinstrument`)
+
+---
+
+## 🔊 Logging Enhancements
+
+- [ ] Add `LOG_LEVEL` via environment
+- [ ] Add structured logging (`loguru`, `structlog`)
+- [ ] Optionally log to file
+- [ ] Validate all logs include symbol, timestamp, and context
+- [ ] Redact sensitive data in logs (API keys, symbols)
+- [ ] Add `REDACT_SENSITIVE_LOGS` flag to logger
+
+---
+
+## 📈 Metrics
+
+- [ ] Poller metrics (stdout or Prometheus-ready)
+  - [ ] Request durations
+  - [ ] Queue send latency
+  - [ ] Poll success/failure counts
+- [ ] Standardize:
+  - [ ] `track_polling_metrics()`
+  - [ ] `track_request_metrics()`
+- [ ] Include metrics for Vault lookups and config loading
+
+---
+
+## 💬 Slack Integration (Optional)
+
+- [ ] Add Slack notifier module
+- [ ] Send alert on critical failure or threshold
+- [ ] Send daily summary if `ENABLE_SLACK_ALERTS=true`
+
+---
+
+## 🧹 Code & Repo Hygiene
+
+- [ ] Validate all:
+  - [ ] Type annotations
+  - [ ] Function/class/module docstrings
+- [ ] Remove unused imports
+- [ ] Ensure consistent folder structure (`src/app`)
+- [ ] Lint all code using `ruff`, `black`, `mypy`, `yamlfix`
+- [ ] Ensure all shared files come from `.template/poller/`
+- [ ] Validate `pyproject.toml` via `check-pyproject`
+- [ ] Enforce `known_first_party = ["app"]`
+- [ ] Confirm `src/app/__init__.py` includes `__version__`, public API exports
+
+---
+
+## 🔄 CI/CD + Tooling
+
+- [ ] GitHub Actions:
+  - [ ] Linting (black, ruff, mypy)
+  - [ ] Tests with coverage
+  - [ ] Pre-commit enforcement
+- [ ] Add support for:
+  - [ ] Version bumping via Commitizen
+  - [ ] SBOM and provenance (SLSA, Cosign)
+  - [ ] Bandit, `pip-audit`, `semgrep`, `cyclonedx-bom`
+- [ ] Publish Docker image (optional)
+
+---
+
+## 📝 Documentation
+
+- [ ] Add README badges: build, test, coverage
+- [ ] Expand README with:
+  - [ ] Setup instructions
+  - [ ] Example usage
+- [ ] Add CONTRIBUTING.md
+- [ ] Ensure LICENSE (Apache 2.0 or MIT) exists
+
+---
+
+## ✅ GitHub Public Repository Hardening Checklist
+
+- [ ] Enable CodeQL scanning
+- [ ] Enable secret scanning (with push protection)
+- [ ] Enable Dependabot alerts (and updates if desired)
+- [ ] Add branch protection rules:
+  - Require PR reviews
+  - Require status checks (lint, tests, audit)
+  - Require signed commits (optional)
+- [ ] Add `SECURITY.md` to `.github/`
+- [ ] Disable unused features (Wiki, Projects)
+- [ ] Configure license and metadata in `pyproject.toml`
+- [ ] Add `.pre-commit-config.yaml` with security hooks
+
+---
+
+## 🔁 Resilience & Runtime Enhancements
+
+- [ ] Retry on queue publish failures using `tenacity`
+- [ ] Retry on API/network errors with exponential backoff
+- [ ] Graceful shutdown (e.g., SIGINT/SIGTERM)
+- [ ] Healthcheck endpoint or CLI for liveness probe
+- [ ] Heartbeat or uptime metric per poller
+
+---
+
+## 🧩 Optional Enhancements
+
+- [ ] Add support for REST/S3/DB as alternative output targets
+- [ ] Support async pollers for high-throughput APIs
+- [ ] Add caching or fallback for symbol list config
+- [ ] Add OAuth2 token refresh for APIs that require it
