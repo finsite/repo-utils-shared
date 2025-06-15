@@ -21,6 +21,13 @@ logger = setup_logger(
     structured=config_shared.get_config_bool("STRUCTURED_LOGGING", False),
 )
 
+REDACT_LOGS = config_shared.get_config_bool("REDACT_SENSITIVE_LOGS", True)
+
+
+def redact(value: str) -> str:
+    """Redact sensitive values from logs if redaction is enabled."""
+    return "[REDACTED]" if REDACT_LOGS else value
+
 
 def main() -> None:
     """Start the data processing service.
@@ -36,6 +43,6 @@ def main() -> None:
 if __name__ == "__main__":
     try:
         main()
-    except Exception:
-        logger.exception("❌ Unhandled exception in main (exception details withheld for security).")
+    except Exception as e:
+        logger.exception("❌ Unhandled exception in main: %s", redact(str(e)))
         sys.exit(1)
