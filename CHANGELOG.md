@@ -1,3 +1,9 @@
+## v0.6.0 (2025-06-15)
+
+### Feat
+
+- fixing security notifications
+
 ## v0.5.1 (2025-06-14)
 
 ### Refactor
