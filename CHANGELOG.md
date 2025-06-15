@@ -1,3 +1,9 @@
+## v0.7.0 (2025-06-15)
+
+### Feat
+
+- fixing generate k8 manifests
+
 ## v0.6.0 (2025-06-15)
 
 ### Feat
