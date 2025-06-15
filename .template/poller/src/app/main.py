@@ -24,11 +24,19 @@ LOG_LEVEL_MAP = {
 }
 
 
-def _redact(value: str) -> str:
-    """Redact sensitive values from logs if enabled."""
-    if config_shared.get_config_bool("REDACT_SENSITIVE_LOGS", False):
-        return "***"
-    return value
+def _redact(value: str, show_last: int = 2) -> str:
+    """Redact sensitive strings for secure logging.
+
+    Args:
+        value: The original value to redact.
+        show_last: How many trailing characters to show.
+
+    Returns:
+        A redacted string like '****XX'.
+    """
+    if not value:
+        return "****"
+    return f"{'*' * (len(value) - show_last)}{value[-show_last:]}"
 
 
 def main() -> None:
@@ -55,22 +63,25 @@ def main() -> None:
     poller = poller_factory.create_poller()
 
     try:
-        logger.info(f"🚀 Starting {poller_type} Poller...")
-        logger.info(f"📅 Polling every {poll_interval} seconds")
+        logger.info("🚀 Starting %s Poller...", _redact(poller_type))
+        logger.info("📅 Polling every %s seconds", poll_interval)
 
         while True:
             symbols: list[str] = config_shared.get_symbols()
-            logger.debug(f"🔍 Loaded {len(symbols)} symbols to poll")
+            logger.debug("🔍 Loaded %d symbols to poll", len(symbols))
 
             for symbol in symbols:
-                rate_limiter.acquire(context=f"{poller_type} - {symbol}")
+                redacted_symbol = _redact(symbol)
+                redacted_context = _redact(f"{poller_type} - {symbol}")
+
+                rate_limiter.acquire(context=redacted_context)
                 try:
-                    logger.debug(f"📡 Polling data for { _redact(symbol) }")
+                    logger.debug("📡 Polling data for %s", redacted_symbol)
                     data: Any = poller.poll([symbol])
                     queue_sender.send_message(data)
                 except Exception as e:
-                    logger.error(f"❌ Error polling { _redact(symbol) }: {e}")
-                    logger.info(f"⏳ Retrying { _redact(symbol) } after {retry_delay} seconds...")
+                    logger.error("❌ Error polling %s", redacted_symbol, exc_info=e)
+                    logger.info("⏳ Retrying %s after %s seconds...", redacted_symbol, retry_delay)
                     time.sleep(retry_delay)
 
             time.sleep(poll_interval)
@@ -78,7 +89,7 @@ def main() -> None:
     except KeyboardInterrupt:
         logger.info("🛑 Polling stopped by user.")
     except Exception as e:
-        logger.exception("🚨 Unexpected error in poller", exc_info=e)
+        logger.exception("🚨 Unexpected error", exc_info=e)
     finally:
         logger.info("📦 Shutting down poller...")
         queue_sender.close()
