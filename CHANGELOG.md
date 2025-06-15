@@ -1,3 +1,9 @@
+## v0.14.0 (2025-06-15)
+
+### Feat
+
+- fixing individual codeql errors
+
 ## v0.13.0 (2025-06-15)
 
 ### Feat
