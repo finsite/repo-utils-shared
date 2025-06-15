@@ -1,57 +1,89 @@
-# Stock Data Poller
+# Stock Poller
 
-This repository collects raw stock-related data from various sources and
-publishes it to a message queue for downstream analysis or storage.
+This repository implements a modular polling service that collects stock data from external APIs and pushes the results to a message queue for downstream processing.
 
-## Features
+## ✅ Features
 
-- Modular poller architecture
-- Pluggable data source integrations (e.g., APIs, web scraping)
-- Configurable polling intervals, rate limits, and batching
-- Secure configuration via environment variables or Vault
-- Queue publishing with support for RabbitMQ and AWS SQS
-- Production-ready Docker + Kubernetes deployment
-- Centralized structured logging
+- Pluggable poller system for various stock data providers
+- RabbitMQ and AWS SQS support via a unified queue interface
+- Vault integration for secure secret management
+- Environment-driven and Vault-overridable configuration
+- Configurable polling interval, rate limiting, and retry behavior
+- Structured logging with optional JSON output
+- Production-ready Docker and Kubernetes deployment
 
-## Project Structure
+## 🗂️ Project Structure
 
 ```
 src/
 ├── app/
-│   ├── config.py               # Configuration loader
-│   ├── main.py                 # Entry point
-│   ├── poller_factory.py       # Dynamically loads the appropriate poller
-│   ├── queue_sender.py         # Publishes messages to RabbitMQ or SQS
-│   ├── utils/                  # Shared utilities
-│   └── pollers/                # Source-specific pollers
+│   ├── main.py                 # Main polling loop
+│   ├── config.py               # Per-repo overrides
+│   ├── config_shared.py        # Shared Vault/ENV logic
+│   ├── poller_factory.py       # Instantiates appropriate poller
+│   ├── queue_sender.py         # Sends to RabbitMQ/SQS
+│   ├── pollers/                # Source-specific pollers
+│   └── utils/
+│       ├── rate_limit.py       # Token bucket rate limiter
+│       ├── setup_logger.py     # Logging setup
+│       ├── types.py            # Shared types and enums
+│       └── vault_client.py     # Vault AppRole client
 ```
 
-## Usage
+## 🛠️ Usage
 
 ```bash
 make install
 make run
 ```
 
-## Environment Variables
-
-| Variable           | Description                        |
-| ------------------ | ---------------------------------- |
-| `QUEUE_TYPE`       | Either `rabbitmq` or `sqs`         |
-| `RABBITMQ_URL`     | URL for RabbitMQ                   |
-| `SQS_QUEUE_URL`    | AWS SQS queue URL                  |
-| `VAULT_ADDR`       | Vault server address               |
-| `VAULT_TOKEN`      | Vault token or AppRole auth config |
-| `POLLING_INTERVAL` | How often to poll (in seconds)     |
-
-## Development
+Or run directly:
 
 ```bash
-make lint        # Run linters
-make test        # Run tests
-make build       # Build Docker image
+python -m app.main
 ```
 
-## License
+## ⚙️ Environment Variables
 
-Apache License 2.0
+| Variable             | Description                                   |
+|----------------------|-----------------------------------------------|
+| `QUEUE_TYPE`         | `rabbitmq` or `sqs`                           |
+| `SYMBOLS`            | Comma-separated list of stock symbols         |
+| `POLLING_INTERVAL`   | Interval between poll cycles (seconds)        |
+| `RATE_LIMIT`         | Requests per second                           |
+| `RETRY_DELAY`        | Delay before retry on failure (seconds)       |
+| `STRUCTURED_LOGGING` | Enable JSON-formatted logs (`true` / `false`) |
+| `VAULT_ADDR`         | Vault server address                          |
+| `VAULT_TOKEN`        | Vault token (or AppRole credentials)          |
+
+## 🧪 Development
+
+```bash
+make lint
+make test
+make build
+make preflight
+```
+
+## 🔐 Security
+
+- Logs redact sensitive values if `REDACT_SENSITIVE_LOGS=true`
+- Vault AppRole authentication with KV v2 secret support
+- CodeQL and Bandit integrated for secure coding practices
+
+## 📦 Deployment
+
+```bash
+docker build -t stock-poller .
+docker run --env-file .env stock-poller
+```
+
+For Kubernetes:
+
+```bash
+make k8s
+```
+
+## 📝 License
+
+Licensed under the [Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0).

@@ -1,47 +1,39 @@
-# TODO — Stock Data Poller
+# TODO for Stock Poller
 
-## 🧩 Missing Features
+## 1. Poller Enhancements
 
-- [ ] Add support for new data sources (e.g., paid APIs, ETFs, commodities)
-- [ ] Implement retry with exponential backoff on poller failure
-- [ ] Add API quota awareness (track usage)
-- [ ] Support time-window-based polling (e.g., last 5m, hourly rollups)
+- [ ] Add additional pollers (e.g., IEX Cloud, Alpha Vantage, EODHD)
+- [ ] Enable dynamic symbol fetching from external service
+- [ ] Improve retry/backoff strategy using exponential delay
+- [ ] Implement optional circuit breaker pattern for failing APIs
 
-## 🛠️ Infrastructure Enhancements
+## 2. Queue Enhancements
 
-- [ ] Add support for Vault secret rotation
-- [ ] Parameterize queue naming convention
-- [ ] Add DLQ (dead letter queue) routing and handling
-- [ ] Make polling interval dynamically adjustable at runtime
+- [ ] Add batch support for queue_sender
+- [ ] Retry on queue publish failure (with `tenacity`)
+- [ ] Add metrics tracking (e.g., Prometheus) for send operations
+- [ ] Add DLQ fallback or audit logging on message send failure
 
-## 📈 Monitoring & Logging
+## 3. Configuration & Security
 
-- [ ] Integrate Prometheus metrics (poll success/failure, duration)
-- [ ] Add structured JSON logging (`loguru` or `structlog`)
-- [ ] Log output message summary for observability
+- [ ] Enforce Vault fallback logic and fail-closed mode
+- [ ] Add support for environment-specific config overlays
+- [ ] Redact sensitive logs when `REDACT_SENSITIVE_LOGS=true`
 
-## ✅ Security & Compliance
+## 4. Observability
 
-- [ ] Add Bandit + Safety to CI for security linting
-- [ ] Generate SBOM (`cyclonedx-bom` or `syft`)
-- [ ] Enable Cosign for image signing
-- [ ] Add REUSE license header validation
-- [ ] Enable Semgrep for static analysis
+- [ ] Add tracing hooks (e.g., OpenTelemetry)
+- [ ] Ship logs to centralized logging stack (ELK, CloudWatch, etc.)
+- [ ] Auto-generate Grafana dashboards for key metrics
 
-## 🧪 Testing & CI
+## 5. Documentation
 
-- [ ] Add test coverage for each poller module
-- [ ] Use `pytest-cov` for coverage metrics
-- [ ] Add smoke tests for startup/config validation
-- [ ] Mirror all pre-commit checks in CI workflow
+- [ ] Finalize per-poller docs and setup examples
+- [ ] Add REST endpoint examples for consuming queue data
+- [ ] Generate SBOM and include SLSA attestation metadata
 
-## 🧹 Code Hygiene
+## 6. Testing
 
-- [ ] Migrate all imports to absolute paths
-- [ ] Remove unused dependencies with `deptry`
-- [ ] Enforce version bump validation via `Commitizen`
-
-## 🪄 Optional Enhancements
-
-- [ ] Add REST endpoint to trigger on-demand polling
-- [ ] Allow polling from config-defined lists of symbols
+- [ ] Expand unit test coverage for all pollers
+- [ ] Add integration tests for queue delivery
+- [ ] Mock rate limiter and symbol list for faster test runs
