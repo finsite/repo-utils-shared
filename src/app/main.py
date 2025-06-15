@@ -36,6 +36,6 @@ def main() -> None:
 if __name__ == "__main__":
     try:
         main()
-    except Exception as e:
-        logger.exception("❌ Unhandled exception in main: %s", e)
+    except Exception:
+        logger.exception("❌ Unhandled exception in main (exception details withheld for security).")
         sys.exit(1)
