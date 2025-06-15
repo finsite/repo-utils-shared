@@ -24,6 +24,13 @@ LOG_LEVEL_MAP = {
 }
 
 
+def _redact(value: str) -> str:
+    """Redact sensitive values from logs if enabled."""
+    if config_shared.get_config_bool("REDACT_SENSITIVE_LOGS", False):
+        return "***"
+    return value
+
+
 def main() -> None:
     """Run the main polling loop to collect and send stock data."""
     validate_environment_variables(["POLLER_TYPE", "SYMBOLS"])
@@ -58,12 +65,12 @@ def main() -> None:
             for symbol in symbols:
                 rate_limiter.acquire(context=f"{poller_type} - {symbol}")
                 try:
-                    logger.debug(f"📡 Polling data for {symbol}")
+                    logger.debug(f"📡 Polling data for { _redact(symbol) }")
                     data: Any = poller.poll([symbol])
                     queue_sender.send_message(data)
                 except Exception as e:
-                    logger.error(f"❌ Error polling {symbol}: {e}")
-                    logger.info(f"⏳ Retrying {symbol} after {retry_delay} seconds...")
+                    logger.error(f"❌ Error polling { _redact(symbol) }: {e}")
+                    logger.info(f"⏳ Retrying { _redact(symbol) } after {retry_delay} seconds...")
                     time.sleep(retry_delay)
 
             time.sleep(poll_interval)
@@ -71,7 +78,7 @@ def main() -> None:
     except KeyboardInterrupt:
         logger.info("🛑 Polling stopped by user.")
     except Exception as e:
-        logger.exception(f"🚨 Unexpected error: {e}")
+        logger.exception("🚨 Unexpected error in poller", exc_info=e)
     finally:
         logger.info("📦 Shutting down poller...")
         queue_sender.close()
