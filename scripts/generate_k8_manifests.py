@@ -1,32 +1,33 @@
 #!/usr/bin/env python3
 
 import os
+import shlex
 import shutil
 import subprocess
 import sys
 
 
 def create_directory(path: str) -> None:
-    """Creates a directory at the given path if it does not already exist."""
+    """Create a directory if it does not exist."""
     os.makedirs(path, exist_ok=True)
 
 
 def write_file(path: str, content: str) -> None:
-    """Writes content to a file, creating directories if necessary. Warns if overwriting."""
+    """Write content to a file, creating directories if necessary."""
     create_directory(os.path.dirname(path))
     if os.path.exists(path):
         print(f"⚠️  Overwriting existing file: {path}")
-    with open(path, "w", newline="\n") as f:
+    with open(path, "w", newline="\n", encoding="utf-8") as f:
         f.write(content.strip() + "\n")
 
 
 def get_app_name() -> str:
-    """Returns the app name from the current directory."""
+    """Return the current directory name as the app name."""
     return os.path.basename(os.getcwd())
 
 
 def generate_all_templates(app_name: str) -> None:
-    """Generates Helm, K8s, and ArgoCD manifests for the app."""
+    """Generate all Helm, K8s, and ArgoCD templates for a given app."""
     files = {
         f"charts/{app_name}/Chart.yaml": f"""
 ---
@@ -54,22 +55,22 @@ service:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: { .Chart.Name }
+  name: {{ .Chart.Name }}
   labels:
-    app: { .Chart.Name }
+    app: {{ .Chart.Name }}
 spec:
-  replicas: { .Values.replicaCount }
+  replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
-      app: { .Chart.Name }
+      app: {{ .Chart.Name }}
   template:
     metadata:
       labels:
-        app: { .Chart.Name }
+        app: {{ .Chart.Name }}
     spec:
       containers:
-      - name: { .Chart.Name }
-        image: "{ .Values.image.repository }:{ .Values.image.tag }"
+      - name: {{ .Chart.Name }}
+        image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
         ports:
         - containerPort: 8080
 """,
@@ -173,9 +174,10 @@ spec:
 
 
 def run_command_safe(cmd: str, desc: str) -> None:
+    """Run a shell command safely with description output."""
     print(f"\n🔍 {desc}:")
     try:
-        subprocess.run(cmd, check=True, shell=True)
+        subprocess.run(shlex.split(cmd), check=True)
     except subprocess.CalledProcessError as e:
         print(f"⚠️  Command failed: {cmd}\n{e}")
     except FileNotFoundError:
@@ -183,6 +185,7 @@ def run_command_safe(cmd: str, desc: str) -> None:
 
 
 def validate_files(app_name: str) -> None:
+    """Run Helm, Kustomize, and yamllint validation on generated files."""
     helm_chart = f"charts/{app_name}"
     kustomize_path = "k8s/overlays/dev"
 
@@ -198,6 +201,7 @@ def validate_files(app_name: str) -> None:
 
 
 def main() -> None:
+    """Entry point for the script."""
     app_name = get_app_name()
     skip_validate = "--skip-validate" in sys.argv
 
