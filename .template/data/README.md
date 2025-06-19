@@ -1,20 +1,43 @@
-# stock-data-<source>
+# Stock Data Collector
 
-This repository polls data from a specific provider and publishes it to a
-message queue.
+This repository gathers raw stock-related data from various sources for further analysis or processing.
 
-## Usage
+## ✅ Features
 
-```bash
-python -m app.main
+- Modular data collection with pluggable sources
+- Flexible symbol list configuration (manual or dynamic)
+- RabbitMQ/SQS publisher support
+- Optional output to local storage or databases
+- Dockerized for consistent deployment
+
+## 🗂️ Project Structure
+
+```
+src/
+└── app/
+    ├── main.py               # Entry point for data polling
+    ├── config.py             # Custom repo configuration
+    ├── poller_factory.py     # Loads appropriate data poller
+    ├── pollers/              # Source-specific pollers
+    └── utils/                # Logging, retry, etc.
 ```
 
-## Structure
+## 🧪 Development
 
-- `pollers/`: Contains poller logic per provider
-- `poller_factory.py`: Chooses correct poller based on config
+```bash
+make install
+make run
+make lint
+make test
+```
 
-## Requirements
+## 📦 Deployment
 
-- Python 3.11+
-- RabbitMQ or SQS configured
+```bash
+docker build -t stock-data .
+docker run --env-file .env stock-data
+```
+
+## 📝 License
+
+Apache License 2.0

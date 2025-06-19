@@ -1,8 +1,10 @@
-# TODO
+# TODO for Backtesting
 
-- [ ] Implement core backtest loop
-- [ ] Add strategy loading and execution
-- [ ] Include realistic market data loader
-- [ ] Log and output metrics
-- [ ] Add tests for each component
-- [ ] Integrate results output format
+## 1. Strategy
+
+- [ ] Add SMA, EMA, RSI strategies
+- [ ] Load historical data from S3 or DB
+
+## 2. Reporting
+
+- [ ] Generate performance metrics and plots
