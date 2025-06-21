@@ -6,11 +6,12 @@ This script creates standard deployment and configuration files based on the app
 (determined from the current directory). It also provides optional validation of the
 generated manifests using Helm, Kustomize, and yamllint.
 """
+
 import os
-import shlex
 import shutil
 import subprocess
 import sys
+from typing import Sequence
 
 
 def create_directory(path: str) -> None:
@@ -179,15 +180,15 @@ spec:
         print(f"✅ Created: {path}")
 
 
-def run_command_safe(cmd: str, desc: str) -> None:
+def run_command_safe(cmd: Sequence[str], desc: str) -> None:
     """Run a shell command safely with description output."""
     print(f"\n🔍 {desc}:")
     try:
-        subprocess.run(shlex.split(cmd), check=True)
+        subprocess.run(cmd, check=True)
     except subprocess.CalledProcessError as e:
-        print(f"⚠️  Command failed: {cmd}\n{e}")
+        print(f"⚠️  Command failed: {' '.join(cmd)}\n{e}")
     except FileNotFoundError:
-        print(f"⚠️  Command not found: {cmd.split()[0]}")
+        print(f"⚠️  Command not found: {cmd[0]}")
 
 
 def validate_files(app_name: str) -> None:
@@ -195,13 +196,13 @@ def validate_files(app_name: str) -> None:
     helm_chart = f"charts/{app_name}"
     kustomize_path = "k8s/overlays/dev"
 
-    run_command_safe(f"helm lint {helm_chart}", "Helm lint")
-    run_command_safe(f"helm template {helm_chart}", "Helm render")
-    run_command_safe(f"kustomize build {kustomize_path}", "Kustomize build")
+    run_command_safe(["helm", "lint", helm_chart], "Helm lint")
+    run_command_safe(["helm", "template", helm_chart], "Helm render")
+    run_command_safe(["kustomize", "build", kustomize_path], "Kustomize build")
 
     if shutil.which("yamllint"):
-        run_command_safe("yamllint charts/", "YAML lint (charts)")
-        run_command_safe("yamllint k8s/", "YAML lint (k8s)")
+        run_command_safe(["yamllint", "charts/"], "YAML lint (charts)")
+        run_command_safe(["yamllint", "k8s/"], "YAML lint (k8s)")
     else:
         print("ℹ️  yamllint not installed, skipping YAML lint checks")
 
