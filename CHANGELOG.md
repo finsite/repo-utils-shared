@@ -1,3 +1,9 @@
+## v0.16.5 (2025-06-21)
+
+### Fix
+
+- address security vulnerablities in config file
+
 ## v0.16.4 (2025-06-21)
 
 ### Fix
