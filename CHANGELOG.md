@@ -1,3 +1,13 @@
+## v0.16.0 (2025-06-21)
+
+### Feat
+
+- finalize shared config and synchronize
+
+### Fix
+
+- address security vulnerablities
+
 ## v0.15.0 (2025-06-19)
 
 ### Feat
