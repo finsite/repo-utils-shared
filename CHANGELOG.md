@@ -1,3 +1,9 @@
+## v0.16.7 (2025-06-21)
+
+### Fix
+
+- address security vulnerablities in queue_sender
+
 ## v0.16.6 (2025-06-21)
 
 ### Fix
