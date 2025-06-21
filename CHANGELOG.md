@@ -1,3 +1,9 @@
+## v0.16.4 (2025-06-21)
+
+### Fix
+
+- address security vulnerablities in main.py
+
 ## v0.16.3 (2025-06-21)
 
 ### Fix
