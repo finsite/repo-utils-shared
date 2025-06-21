@@ -9,7 +9,7 @@ from shutil import which
 
 
 def get_pip_compile_path() -> str:
-    """Locate the full path to pip-compile securely."""
+    """Resolve the full path to pip-compile."""
     pip_compile = which("pip-compile")
     if not pip_compile:
         print("[Error] pip-compile not found in PATH.")
