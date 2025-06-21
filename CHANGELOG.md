@@ -1,3 +1,9 @@
+## v0.16.2 (2025-06-21)
+
+### Fix
+
+- address security vulnerablities in files
+
 ## v0.16.1 (2025-06-21)
 
 ### Fix
