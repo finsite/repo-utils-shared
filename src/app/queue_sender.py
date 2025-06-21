@@ -48,7 +48,8 @@ def publish_to_queue(payload: list[dict[str, Any]]) -> None:
         elif queue_type == "sqs":
             _send_to_sqs(message)
         else:
-            logger.error("❌ Invalid QUEUE_TYPE specified: %s", queue_type)
+            redacted_type = "[REDACTED]" if REDACT_SENSITIVE_LOGS else queue_type
+            logger.error("❌ Invalid QUEUE_TYPE specified: %s", redacted_type)
 
 
 @retry(stop=stop_after_attempt(3), wait=wait_exponential(min=2, max=10))
