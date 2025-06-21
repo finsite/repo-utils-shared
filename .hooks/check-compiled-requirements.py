@@ -2,7 +2,7 @@
 if they are out of sync with requirements.in and requirements-dev.in.
 """
 
-import subprocess
+import subprocess  # nosec B404 - subprocess is used safely with controlled arguments
 import sys
 from pathlib import Path
 from shutil import which
@@ -32,7 +32,7 @@ def recompile(in_file: str, out_file: str) -> bool:
     """
     print(f"[Fix] Recompiling {in_file} -> {out_file}")
     try:
-        subprocess.run(
+        subprocess.run(  # nosec B603 - fully qualified pip-compile path and safe args
             [PIP_COMPILE, in_file, "--resolver=backtracking", "--output-file", out_file],
             check=True,
         )
@@ -60,7 +60,7 @@ def check_file(in_file: str, out_file: str, autofix: bool = True) -> bool:
     tmp_out = Path(out_file + ".tmp")
 
     try:
-        subprocess.run(
+        subprocess.run(  # nosec B603 - safe, static argument list
             [PIP_COMPILE, in_file, "--resolver=backtracking", "--output-file", str(tmp_out)],
             check=True,
             stdout=subprocess.DEVNULL,
