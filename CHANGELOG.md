@@ -1,3 +1,9 @@
+## v0.16.3 (2025-06-21)
+
+### Fix
+
+- address security vulnerablities in queue_handler.py
+
 ## v0.16.2 (2025-06-21)
 
 ### Fix
