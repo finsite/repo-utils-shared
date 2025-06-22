@@ -1,3 +1,9 @@
+## v0.16.10 (2025-06-22)
+
+### Fix
+
+- add new functionality to shared utilities
+
 ## v0.16.9 (2025-06-21)
 
 ### Fix
