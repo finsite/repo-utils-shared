@@ -9,4 +9,4 @@ def test_valid_status_failure():
 
 def test_invalid_status():
     with pytest.raises(ValueError):
-        track_polling_metrics("unknown", "test_source", "TEST")
+        track_polling_metrics("unknown", "test_source", "TEST")  # type: ignore[arg-type]
