@@ -1,3 +1,9 @@
+## v0.17.0 (2025-06-22)
+
+### Feat
+
+- **utils**: finalize shared utility modules and tests
+
 ## v0.16.10 (2025-06-22)
 
 ### Fix
