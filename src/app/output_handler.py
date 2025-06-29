@@ -35,18 +35,18 @@ logger = setup_logger(__name__)
 
 
 class OutputDispatcher:
-    """Handles routing output to different destinations like queue, log, REST, S3, or database."""
+    """Handles routing analysis output to different destinations (e.g., queue, REST, S3, DB)."""
 
     def __init__(self) -> None:
-        """Initialize the dispatcher with output modes from config."""
+        """Initialize dispatcher with configured output modes."""
         self.output_modes = config_shared.get_output_modes()
 
     def send(self, data: list[dict[str, Any]]) -> None:
-        """Send data to configured output destinations.
+        """
+        Dispatch processed analysis output to one or more configured destinations.
 
         Args:
             data (list[dict[str, Any]]): List of data payloads to send.
-
         """
         try:
             validate_list_of_dicts(data, required_keys=["text"])
@@ -72,11 +72,11 @@ class OutputDispatcher:
             logger.error("❌ Failed to send output: %s", e)
 
     def send_trade_simulation(self, data: dict[str, Any]) -> None:
-        """Send simulated trade data to either a queue or database.
+        """
+        Send simulated trade data to the appropriate paper trade destination.
 
         Args:
-            data (dict[str, Any]): Trade data to be sent.
-
+            data (dict[str, Any]): Simulated trade payload.
         """
         try:
             if config_shared.get_paper_trading_database_enabled():
@@ -90,14 +90,14 @@ class OutputDispatcher:
     def _get_dispatch_method(
         self, mode: OutputMode
     ) -> Callable[[list[dict[str, Any]]], None] | None:
-        """Return the corresponding method for the output mode.
+        """
+        Resolve the output dispatch method based on the mode.
 
         Args:
-            mode (OutputMode): Output mode to use.
+            mode (OutputMode): Output mode enum value.
 
         Returns:
-            Callable or None: Corresponding output method.
-
+            Callable or None: Method to handle the output.
         """
         return {
             OutputMode.LOG: self._output_to_log,
@@ -109,49 +109,28 @@ class OutputDispatcher:
         }.get(mode)
 
     def _output_to_log(self, data: list[dict[str, Any]]) -> None:
-        """Log each message in the data to the application log.
-
-        Args:
-            data (list[dict[str, Any]]): A list of output messages to log.
-
-        """
+        """Log each item in the data list."""
         for item in data:
             logger.info("📝 Processed message:\n%s", json.dumps(item, indent=4))
 
     def _output_to_stdout(self, data: list[dict[str, Any]]) -> None:
-        """Print the data to standard output.
-
-        Args:
-            data (list[dict[str, Any]]): A list of output messages to print.
-
-        """
+        """Print each item in the data list to standard output."""
         for item in data:
             print(json.dumps(item, indent=4))
 
     @retry(stop=stop_after_attempt(3), wait=wait_exponential(multiplier=1, min=1, max=10))
     def _output_to_queue(self, data: list[dict[str, Any]]) -> None:
-        """Publish the data to a queue.
-
-        Args:
-            data (list[dict[str, Any]]): A list of output messages to queue.
-
-        """
+        """Publish the data to the configured queue."""
         publish_to_queue(data)
         logger.info("✅ Output published to queue: %d message(s)", len(data))
         self._record_metric("output_queue_success", len(data))
 
     def _output_to_rest(self, data: list[dict[str, Any]]) -> None:
-        """Send the data to a REST endpoint.
-
-        Args:
-            data (list[dict[str, Any]]): A list of output messages to send via REST.
-
-        """
+        """Send the data to the configured REST endpoint."""
         import requests
 
         url = config_shared.get_rest_output_url()
         headers = {"Content-Type": "application/json"}
-
         start = time.perf_counter()
         try:
             response = requests.post(url, json=data, headers=headers, timeout=10)
@@ -169,18 +148,12 @@ class OutputDispatcher:
             rest_dispatch_failures.labels(status="exception").inc()
 
     def _output_to_s3(self, data: list[dict[str, Any]]) -> None:
-        """Upload the data as a JSON file to S3.
-
-        Args:
-            data (list[dict[str, Any]]): A list of output messages to upload to S3.
-
-        """
+        """Upload the data as a JSON file to an S3 bucket."""
         import boto3
 
         s3 = boto3.client("s3")
         bucket = config_shared.get_s3_output_bucket()
         key = f"outputs/{uuid.uuid4()}.json"
-
         start = time.perf_counter()
         try:
             s3.put_object(Bucket=bucket, Key=key, Body=json.dumps(data).encode("utf-8"))
@@ -193,12 +166,7 @@ class OutputDispatcher:
             s3_dispatch_failures.labels(status="exception").inc()
 
     def _output_to_database(self, data: list[dict[str, Any]]) -> None:
-        """Insert the data into a database using raw SQL.
-
-        Args:
-            data (list[dict[str, Any]]): A list of output messages to write to the DB.
-
-        """
+        """Write the data to the configured database using raw SQL inserts."""
         import sqlalchemy
 
         engine = sqlalchemy.create_engine(config_shared.get_database_output_url())
@@ -220,12 +188,7 @@ class OutputDispatcher:
 
     @retry(stop=stop_after_attempt(3), wait=wait_exponential(multiplier=1, min=1, max=10))
     def _output_paper_trade_to_queue(self, data: dict[str, Any]) -> None:
-        """Send paper trade simulation data to a queue.
-
-        Args:
-            data (dict[str, Any]): Paper trade message.
-
-        """
+        """Send paper trade data to a paper trading queue."""
         queue_name = config_shared.get_paper_trading_queue_name()
         exchange = config_shared.get_paper_trading_exchange()
         publish_to_queue([data], queue=queue_name, exchange=exchange)
@@ -233,23 +196,12 @@ class OutputDispatcher:
         self._record_metric("paper_trade_sent", 1)
 
     def _output_paper_trade_to_database(self, data: dict[str, Any]) -> None:
-        """Stub for sending paper trades to a database (not yet implemented).
-
-        Args:
-            data (dict[str, Any]): Paper trade message.
-
-        """
+        """Placeholder for paper trade DB support (not implemented)."""
         logger.warning("⚠️ Paper trading database integration not implemented.")
         self._record_metric("paper_trade_skipped", 1)
 
     def _record_metric(self, name: str, value: int) -> None:
-        """Track Prometheus or logging metrics for dispatch operations.
-
-        Args:
-            name (str): Metric name.
-            value (int): Count to increment.
-
-        """
+        """Record a metric for dispatch monitoring."""
         if name == "output_queue_success":
             output_counter.labels(mode="queue").inc(value)
         elif name == "paper_trade_sent":
@@ -261,3 +213,16 @@ class OutputDispatcher:
 
 
 output_handler = OutputDispatcher()
+
+
+def send_to_output(data: list[dict[str, Any]]) -> None:
+    """
+    Send data using the default output handler instance.
+
+    Args:
+        data (list[dict[str, Any]]): List of messages to dispatch.
+    """
+    output_handler.send(data)
+
+
+__all__ = ["send_to_output", "output_handler"]
