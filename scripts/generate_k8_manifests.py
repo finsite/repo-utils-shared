@@ -184,7 +184,7 @@ def run_command_safe(cmd: Sequence[str], desc: str) -> None:
     """Run a shell command safely with description output."""
     print(f"\n🔍 {desc}:")
     try:
-        subprocess.run(cmd, check=True)
+        subprocess.run(cmd, check=True)  # nosec B603 B607: safe list, not user input
     except subprocess.CalledProcessError as e:
         print(f"⚠️  Command failed: {' '.join(cmd)}\n{e}")
     except FileNotFoundError:
