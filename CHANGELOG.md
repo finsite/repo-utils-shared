@@ -1,3 +1,9 @@
+## v0.17.2 (2025-06-29)
+
+### Fix
+
+- remediate test vulnerabilities
+
 ## v0.17.1 (2025-06-29)
 
 ### Fix
