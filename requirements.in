@@ -18,4 +18,4 @@ requests>=2.32.4
 urllib3>=2.5.0
 
 #paper trading enhancement
-sqlalchemy
+sqlalchemy>=2.0
