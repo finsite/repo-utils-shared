@@ -88,24 +88,24 @@ class HealthHandler(BaseHTTPRequestHandler):
         pass
 
 
-def start_health_server(port: int = 8081) -> None:
+def start_health_server() -> None:
     """
     Start an HTTP server exposing /health and /ready endpoints.
 
     This server runs in a background thread and is intended for use with
     readiness and liveness probes in orchestration environments.
-
-    Args:
-        port (int): Port to bind the health server to. Defaults to 8081.
     """
     if not config_shared.get_healthcheck_enabled():
         logger.info("⚠️ Healthcheck server is disabled by configuration.")
         return
 
+    host = config_shared.get_healthcheck_host()  # defaults to 127.0.0.1
+    port = config_shared.get_healthcheck_port()  # defaults to 8081
+
     def serve() -> None:
-        with HTTPServer(("0.0.0.0", port), HealthHandler) as httpd:
-            logger.info("📡 Healthcheck server running on port %d", port)
+        with HTTPServer((host, port), HealthHandler) as httpd:
+            logger.info("📡 Healthcheck server running on %s:%d", host, port)
             httpd.serve_forever()
 
-    thread: threading.Thread = threading.Thread(target=serve, daemon=True)
+    thread = threading.Thread(target=serve, daemon=True)
     thread.start()
