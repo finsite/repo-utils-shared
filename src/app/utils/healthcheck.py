@@ -18,52 +18,44 @@ _health_flag: bool = True
 
 
 def is_ready() -> bool:
-    """
-    Check if the service is ready to handle requests.
+    """Check if the service is ready to handle requests.
 
     Returns:
         bool: True if the service has completed startup and is ready.
+
     """
     return _readiness_flag
 
 
 def is_healthy() -> bool:
-    """
-    Check if the service is currently healthy.
+    """Check if the service is currently healthy.
 
     Returns:
         bool: True if the service is healthy and not in a failure state.
+
     """
     return _health_flag
 
 
 def set_ready() -> None:
-    """
-    Mark the service as ready to handle traffic.
-    """
+    """Mark the service as ready to handle traffic."""
     global _readiness_flag
     _readiness_flag = True
     logger.info("✅ Service marked as ready")
 
 
 def set_unhealthy() -> None:
-    """
-    Mark the service as unhealthy (e.g., during shutdown or failure).
-    """
+    """Mark the service as unhealthy (e.g., during shutdown or failure)."""
     global _health_flag
     _health_flag = False
     logger.warning("❌ Service marked as unhealthy")
 
 
 class HealthHandler(BaseHTTPRequestHandler):
-    """
-    HTTP request handler for /health and /ready endpoints.
-    """
+    """HTTP request handler for /health and /ready endpoints."""
 
     def do_GET(self) -> None:
-        """
-        Handle GET requests for readiness and liveness checks.
-        """
+        """Handle GET requests for readiness and liveness checks."""
         if self.path == "/health":
             status: int = 200 if is_healthy() else 500
             self.send_response(status)
@@ -82,15 +74,12 @@ class HealthHandler(BaseHTTPRequestHandler):
             self.wfile.write(b"not found")
 
     def log_message(self, format: str, *args: object) -> None:
-        """
-        Suppress default access log output from BaseHTTPRequestHandler.
-        """
+        """Suppress default access log output from BaseHTTPRequestHandler."""
         pass
 
 
 def start_health_server() -> None:
-    """
-    Start an HTTP server exposing /health and /ready endpoints.
+    """Start an HTTP server exposing /health and /ready endpoints.
 
     This server runs in a background thread and is intended for use with
     readiness and liveness probes in orchestration environments.

@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
-"""
-Generate Helm, Kustomize, and ArgoCD Kubernetes manifests for the current app.
+"""Generate Helm, Kustomize, and ArgoCD Kubernetes manifests for the current app.
 
 This script creates standard deployment and configuration files based on the app name
 (determined from the current directory). It also provides optional validation of the
@@ -11,7 +10,7 @@ import os
 import shutil
 import subprocess
 import sys
-from typing import Sequence
+from collections.abc import Sequence
 
 
 def create_directory(path: str) -> None:

@@ -5,7 +5,6 @@ from Vault, environment variables, or defaults — in that order.
 """
 
 from functools import lru_cache
-from typing import List, Tuple
 
 from app.utils.config_utils import get_config_bool, get_config_value
 from app.utils.types import OutputMode
@@ -1351,23 +1350,24 @@ def get_database_insert_sql() -> str:
     """
     return get_config_value("DATABASE_INSERT_SQL", "")
 
+
 @lru_cache
 def get_healthcheck_host() -> str:
-    """
-    Return the host to bind the healthcheck server to.
+    """Return the host to bind the healthcheck server to.
 
     Returns:
         str: Host IP (default: "127.0.0.1")
+
     """
     return get_config_value("HEALTHCHECK_HOST", "127.0.0.1")
 
 
 @lru_cache
 def get_healthcheck_port() -> int:
-    """
-    Return the port number for the healthcheck server.
+    """Return the port number for the healthcheck server.
 
     Returns:
         int: Port (default: 8081)
+
     """
     return int(get_config_value("HEALTHCHECK_PORT", "8081"))

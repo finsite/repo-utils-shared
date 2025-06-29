@@ -1,6 +1,8 @@
 # Stock Poller
 
-This repository implements a modular polling service that collects stock data from external APIs and pushes the results to a message queue for downstream processing.
+This repository implements a modular polling service that collects stock data
+from external APIs and pushes the results to a message queue for downstream
+processing.
 
 ## ✅ Features
 
@@ -46,7 +48,7 @@ python -m app.main
 ## ⚙️ Environment Variables
 
 | Variable             | Description                                   |
-|----------------------|-----------------------------------------------|
+| -------------------- | --------------------------------------------- |
 | `QUEUE_TYPE`         | `rabbitmq` or `sqs`                           |
 | `SYMBOLS`            | Comma-separated list of stock symbols         |
 | `POLLING_INTERVAL`   | Interval between poll cycles (seconds)        |
@@ -86,4 +88,5 @@ make k8s
 
 ## 📝 License
 
-Licensed under the [Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0).
+Licensed under the
+[Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0).

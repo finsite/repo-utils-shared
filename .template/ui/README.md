@@ -1,6 +1,9 @@
 # Stock Dashboard UI
 
-This repository contains the frontend for the stock analytics dashboard, built using **Next.js**, **React**, **Tailwind CSS**, and **TypeScript**. It displays stock data, sentiment scores, technical indicators, and custom visualizations sourced from backend microservices.
+This repository contains the frontend for the stock analytics dashboard, built
+using **Next.js**, **React**, **Tailwind CSS**, and **TypeScript**. It displays
+stock data, sentiment scores, technical indicators, and custom visualizations
+sourced from backend microservices.
 
 ## ✅ Features
 
@@ -53,7 +56,8 @@ make test
 npm run test
 ```
 
-Unit testing is handled by [Vitest](https://vitest.dev/) and coverage by [c8](https://github.com/bcoe/c8).
+Unit testing is handled by [Vitest](https://vitest.dev/) and coverage by
+[c8](https://github.com/bcoe/c8).
 
 ## 🚀 Deployment
 
@@ -81,4 +85,5 @@ make helm-install
 
 ## 📝 License
 
-Licensed under the [Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0).
+Licensed under the
+[Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0).

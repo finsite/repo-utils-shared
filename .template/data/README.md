@@ -1,6 +1,7 @@
 # Stock Data Collector
 
-This repository gathers raw stock-related data from various sources for further analysis or processing.
+This repository gathers raw stock-related data from various sources for further
+analysis or processing.
 
 ## ✅ Features
 

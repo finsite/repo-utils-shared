@@ -1,6 +1,4 @@
-"""
-Unit tests for config.py
-"""
+"""Unit tests for config.py."""
 
 import unittest
 from unittest.mock import patch
