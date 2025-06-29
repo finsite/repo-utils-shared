@@ -47,32 +47,32 @@ def health_server() -> None:
 
 @pytest.mark.usefixtures("health_server")
 def test_health_endpoint() -> None:
-    resp = requests.get("http://localhost:8089/health")
+    resp = requests.get("http://localhost:8089/health", timeout=5)
     assert resp.status_code == 200
     assert resp.text == "healthy"
 
     healthcheck.set_unhealthy()
 
-    resp = requests.get("http://localhost:8089/health")
+    resp = requests.get("http://localhost:8089/health", timeout=5)
     assert resp.status_code == 500
     assert resp.text == "unhealthy"
 
 
 @pytest.mark.usefixtures("health_server")
 def test_ready_endpoint() -> None:
-    resp = requests.get("http://localhost:8089/ready")
+    resp = requests.get("http://localhost:8089/ready", timeout=5)
     assert resp.status_code == 503
     assert resp.text == "not ready"
 
     healthcheck.set_ready()
 
-    resp = requests.get("http://localhost:8089/ready")
+    resp = requests.get("http://localhost:8089/ready", timeout=5)
     assert resp.status_code == 200
     assert resp.text == "ready"
 
 
 @pytest.mark.usefixtures("health_server")
 def test_unknown_endpoint() -> None:
-    resp = requests.get("http://localhost:8089/unknown")
+    resp = requests.get("http://localhost:8089/unknown", timeout=5)
     assert resp.status_code == 404
     assert resp.text == "not found"
