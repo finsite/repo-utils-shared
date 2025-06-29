@@ -1,3 +1,9 @@
+## v0.19.0 (2025-06-29)
+
+### Feat
+
+- tests docstring formatters
+
 ## v0.18.0 (2025-06-29)
 
 ### Feat
