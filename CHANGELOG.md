@@ -1,3 +1,9 @@
+## v0.17.1 (2025-06-29)
+
+### Fix
+
+- add new functionality to shared utilities
+
 ## v0.17.0 (2025-06-22)
 
 ### Feat
