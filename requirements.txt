@@ -4,9 +4,9 @@
 #
 #    pip-compile --output-file=requirements.txt --strip-extras requirements.in requirements.in
 #
-boto3==1.39.1
+boto3==1.39.3
     # via -r requirements.in
-botocore==1.39.1
+botocore==1.39.3
     # via
     #   boto3
     #   s3transfer
@@ -20,7 +20,7 @@ contourpy==1.3.2
     # via matplotlib
 cycler==0.12.1
     # via matplotlib
-fonttools==4.58.4
+fonttools==4.58.5
     # via matplotlib
 greenlet==3.2.3
     # via sqlalchemy
