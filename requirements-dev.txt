@@ -185,7 +185,7 @@ nh3==0.2.21
     # via readme-renderer
 nodeenv==1.9.1
     # via pre-commit
-numpy==1.26.4
+numpy==2.3.1
     # via
     #   -r D:\git\repo-utils-shared\requirements.in
     #   contourpy
@@ -348,7 +348,7 @@ sqlalchemy==2.0.41
     # via -r D:\git\repo-utils-shared\requirements.in
 stevedore==5.4.1
     # via bandit
-termcolor==2.3.0
+termcolor==3.1.0
     # via
     #   -r requirements-dev.in
     #   commitizen
