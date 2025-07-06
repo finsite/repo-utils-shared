@@ -5,7 +5,7 @@ Supports KV v2 secrets engine and includes environment-aware namespace handling.
 
 import os
 from functools import lru_cache
-from typing import Any, Optional
+from typing import Any
 
 import hvac
 from tenacity import retry, stop_after_attempt, wait_fixed

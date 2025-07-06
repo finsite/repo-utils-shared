@@ -214,7 +214,9 @@ pbr==6.1.1
 pika==1.3.2
     # via -r D:\git\repo-utils-shared\requirements.in
 pillow==11.3.0
-    # via matplotlib
+    # via
+    #   -r D:\git\repo-utils-shared\requirements.in
+    #   matplotlib
 platformdirs==4.3.8
     # via
     #   black

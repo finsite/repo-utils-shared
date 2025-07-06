@@ -1466,3 +1466,27 @@ def get_database_insert_sql() -> str:
 
     """
     return get_config_value("DATABASE_INSERT_SQL")
+
+@lru_cache
+def get_structured_logging() -> bool:
+    """
+    Returns whether structured logging (e.g., JSON logs) is enabled.
+
+    Controlled by the environment variable STRUCTURED_LOGGING.
+
+    Returns:
+        bool: True if structured logging is enabled, else False.
+    """
+    return get_config_bool("STRUCTURED_LOGGING", default="false")
+
+@lru_cache
+def get_dry_run_mode() -> bool:
+    """
+    Returns whether dry-run mode is enabled.
+
+    In dry-run mode, the app may skip sending data or executing irreversible actions.
+
+    Returns:
+        bool: True if dry-run mode is enabled, else False.
+    """
+    return get_config_bool("DRY_RUN", default="false")

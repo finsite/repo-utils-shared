@@ -19,3 +19,6 @@ urllib3>=2.5.0
 
 #paper trading enhancement
 sqlalchemy>=2.0
+
+#pillow vulnerability
+pillow>=11.3.0
