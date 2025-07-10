@@ -1,3 +1,9 @@
+## v0.24.0 (2025-07-10)
+
+### Feat
+
+- address issues with config_shared and improper vault caching
+
 ## v0.23.0 (2025-07-06)
 
 ### Feat
