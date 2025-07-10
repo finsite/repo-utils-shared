@@ -1,3 +1,9 @@
+## v0.23.0 (2025-07-06)
+
+### Feat
+
+- address missing functions
+
 ## v0.22.0 (2025-07-01)
 
 ### Feat
