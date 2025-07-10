@@ -20,9 +20,9 @@ bandit==1.8.3
     # via -r requirements-dev.in
 black==25.1.0
     # via -r requirements-dev.in
-boto3==1.39.3
+boto3==1.39.4
     # via -r D:\git\repo-utils-shared\requirements.in
-botocore==1.39.3
+botocore==1.39.4
     # via
     #   boto3
     #   s3transfer
@@ -32,7 +32,7 @@ build==1.2.2.post1
     # via -r requirements-dev.in
 bump-my-version==1.1.2
     # via -r requirements-dev.in
-certifi==2025.6.15
+certifi==2025.7.9
     # via
     #   httpcore
     #   httpx
