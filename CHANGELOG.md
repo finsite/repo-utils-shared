@@ -1,3 +1,9 @@
+## v0.24.1 (2025-07-24)
+
+### Fix
+
+- address security vulnerability output_handler
+
 ## v0.24.0 (2025-07-10)
 
 ### Feat
