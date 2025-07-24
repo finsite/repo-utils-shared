@@ -5,7 +5,6 @@ from Vault, environment variables, or defaults — in that order.
 """
 
 from functools import lru_cache
-from typing import List, Tuple
 
 from app.utils.config_utils import get_config_bool
 from app.utils.types import OutputMode
@@ -270,6 +269,16 @@ def get_log_level() -> str:
 
     """
     return get_config_value_cached("LOG_LEVEL", "INFO")
+
+
+def get_log_format() -> str:
+    """Returns the configured log format.
+
+    Returns:
+        str: 'json' or 'text' (default is 'text').
+
+    """
+    return get_config_value_cached("LOG_FORMAT", "text").lower()
 
 
 @lru_cache
