@@ -5,7 +5,7 @@ This ensures that sensitive fields are redacted and logs follow consistent forma
 
 import logging
 import os
-from typing import Any
+from typing import Any, Optional
 
 from app.utils.redactor import redact_dict
 from app.utils.setup_logger import setup_logger
@@ -18,65 +18,65 @@ SAFE_LOG_STRUCTURED: bool = os.getenv("SAFE_LOG_STRUCTURED", "false").lower() ==
 logger: logging.Logger = setup_logger(__name__, structured=SAFE_LOG_STRUCTURED)
 
 
-def safe_info(message: str, data: dict[str, Any] | None = None) -> None:
-    """Logs a sanitized info-level message.
+def safe_info(message: str, data: Optional[dict[str, Any]] = None) -> None:
+    """
+    Logs an info-level message with optional sanitized payload metadata.
 
     Args:
-        message (str): The log message or context.
-        data (Optional[Dict[str, Any]]): Optional dictionary payload to log (will be redacted if needed).
-
+        message (str): Human-readable log message.
+        data (Optional[dict]): Dictionary payload to log. Only logs redacted metadata unless SAFE_LOG_FULL is enabled.
     """
     if data is None:
         logger.info(message)
         return
 
-    payload = data if SAFE_LOG_FULL else redact_dict(data)
-    logger.info("%s | keys=%s", message, list(payload.keys()))
+    payload_size = len(data) if SAFE_LOG_FULL else len(redact_dict(data))
+    logger.info("%s | payload_size=%d", message, payload_size)
 
 
-def safe_warning(message: str, data: dict[str, Any] | None = None) -> None:
-    """Logs a sanitized warning-level message.
+def safe_warning(message: str, data: Optional[dict[str, Any]] = None) -> None:
+    """
+    Logs a warning-level message with optional sanitized payload metadata.
 
     Args:
-        message (str): The log message or context.
-        data (Optional[Dict[str, Any]]): Optional dictionary payload to log (will be redacted if needed).
-
+        message (str): Human-readable log message.
+        data (Optional[dict]): Dictionary payload to log. Only logs redacted metadata unless SAFE_LOG_FULL is enabled.
     """
     if data is None:
         logger.warning(message)
         return
 
-    payload = data if SAFE_LOG_FULL else redact_dict(data)
-    logger.warning("%s | keys=%s", message, list(payload.keys()))
+    payload_size = len(data) if SAFE_LOG_FULL else len(redact_dict(data))
+    logger.warning("%s | payload_size=%d", message, payload_size)
 
 
-def safe_error(message: str, data: dict[str, Any] | None = None) -> None:
-    """Logs a sanitized error-level message.
+def safe_error(message: str, data: Optional[dict[str, Any]] = None) -> None:
+    """
+    Logs an error-level message with optional sanitized payload metadata.
 
     Args:
-        message (str): The log message or context.
-        data (Optional[Dict[str, Any]]): Optional dictionary payload to log (will be redacted if needed).
-
+        message (str): Human-readable log message.
+        data (Optional[dict]): Dictionary payload to log. Only logs redacted metadata unless SAFE_LOG_FULL is enabled.
     """
     if data is None:
         logger.error(message)
         return
 
-    payload = data if SAFE_LOG_FULL else redact_dict(data)
-    logger.error("%s | keys=%s", message, list(payload.keys()))
+    payload_size = len(data) if SAFE_LOG_FULL else len(redact_dict(data))
+    logger.error("%s | payload_size=%d", message, payload_size)
 
 
-def safe_debug(message: str, data: dict[str, Any] | None = None) -> None:
-    """Logs a sanitized debug-level message.
+def safe_debug(message: str, data: Optional[dict[str, Any]] = None) -> None:
+    """
+    Logs a debug-level message with optional sanitized payload metadata.
 
     Args:
-        message (str): The log message or context.
-        data (Optional[Dict[str, Any]]): Optional dictionary payload to log (will be redacted if needed).
-
+        message (str): Human-readable log message.
+        data (Optional[dict]): Dictionary payload to log. Only logs redacted metadata unless SAFE_LOG_FULL is enabled.
     """
     if data is None:
         logger.debug(message)
         return
 
-    payload = data if SAFE_LOG_FULL else redact_dict(data)
-    logger.debug("%s | keys=%s", message, list(payload.keys()))
+    payload_size = len(data) if SAFE_LOG_FULL else len(redact_dict(data))
+    logger.debug("%s | payload_size=%d", message, payload_size)
