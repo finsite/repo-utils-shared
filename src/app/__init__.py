@@ -4,4 +4,4 @@ Shared utility modules and configuration scaffolding for all
 repositories.
 """
 
-__version__ = "0.24.3"
+__version__ = "0.24.4"

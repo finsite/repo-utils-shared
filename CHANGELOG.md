@@ -1,3 +1,9 @@
+## v0.24.4 (2025-07-25)
+
+### Fix
+
+- address security vulnerability safe_logger
+
 ## v0.24.3 (2025-07-25)
 
 ### Fix
