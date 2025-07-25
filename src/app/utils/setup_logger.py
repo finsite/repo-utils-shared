@@ -6,7 +6,6 @@ import logging
 import sys
 from logging import Logger
 from logging.handlers import RotatingFileHandler
-from typing import Optional
 
 try:
     from pythonjsonlogger.json import JsonFormatter
