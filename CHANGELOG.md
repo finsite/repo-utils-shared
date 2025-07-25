@@ -1,3 +1,9 @@
+## v0.24.2 (2025-07-25)
+
+### Fix
+
+- address security vulnerability vault_secrets
+
 ## v0.24.1 (2025-07-24)
 
 ### Fix
