@@ -1,3 +1,9 @@
+## v0.24.3 (2025-07-25)
+
+### Fix
+
+- address security vulnerability config_shared
+
 ## v0.24.2 (2025-07-25)
 
 ### Fix
