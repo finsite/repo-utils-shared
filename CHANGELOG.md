@@ -1,3 +1,10 @@
+## v0.24.5 (2025-07-26)
+
+### Fix
+
+- Add Sbom workflows
+- Address failing workflows
+
 ## v0.24.4 (2025-07-25)
 
 ### Fix
