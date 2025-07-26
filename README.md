@@ -1,5 +1,9 @@
 # Stock Poller
 
+[![SLSA Provenance](https://slsa.dev/images/gh-badge-blue.svg)](https://github.com/YOUR_ORG/YOUR_REPO/releases)
+[![CodeQL](https://github.com/YOUR_ORG/YOUR_REPO/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/YOUR_ORG/YOUR_REPO/actions/workflows/codeql-analysis.yml)
+[![Docker Image](https://img.shields.io/badge/docker-ready-blue)](https://hub.docker.com/r/YOUR_IMAGE)
+
 This repository implements a modular polling service that collects stock data
 from external APIs and pushes the results to a message queue for downstream
 processing.
@@ -67,11 +71,13 @@ make build
 make preflight
 ```
 
-## 🔐 Security
+## 🔐 Security & Compliance
 
 - Logs redact sensitive values if `REDACT_SENSITIVE_LOGS=true`
 - Vault AppRole authentication with KV v2 secret support
 - CodeQL and Bandit integrated for secure coding practices
+- SLSA v1 provenance generation for tagged releases
+- All releases include signed provenance, SBOM, and CVE scan
 
 ## 📦 Deployment
 
@@ -85,6 +91,25 @@ For Kubernetes:
 ```bash
 make k8s
 ```
+
+## 📜 Compliance & Attestation
+
+This repository follows production-grade software supply chain practices:
+
+- ✅ [SLSA Provenance](https://slsa.dev/spec/v1.0): All versioned releases are
+  signed and verifiable
+- ✅ SBOM (CycloneDX JSON) is generated and attached to each release
+- ✅ Vulnerability scan results (`pip-audit.json`) published per release
+- ✅ Code is scanned with [CodeQL](https://codeql.github.com/) and
+  [Bandit](https://bandit.readthedocs.io/)
+- ✅ SPDX-style license report via
+  [`pip-licenses`](https://pypi.org/project/pip-licenses/)
+
+Each release includes:
+
+- 📄 `bom.json` – CycloneDX SBOM
+- 📄 `pip-audit.json` – CVE audit results
+- 🔐 `intoto.jsonl` – DSSE-attested provenance
 
 ## 📝 License
 
