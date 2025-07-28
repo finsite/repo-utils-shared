@@ -1,3 +1,9 @@
+## v0.24.6 (2025-07-28)
+
+### Fix
+
+- Update auto rebase to current version
+
 ## v0.24.5 (2025-07-26)
 
 ### Fix
