@@ -45,7 +45,7 @@ jobs:
             .
       - name: 📜 Generate SBOM for Docker Image
         run: |
-          pip install syft==0.98.0
+          pip install syft==0.96.0
           syft ghcr.io/${{ github.repository }}:${{ env.VERSION }} -o cyclonedx-json > sbom.image.json
       - name: 🧾 Get Image Digest
         run: |
