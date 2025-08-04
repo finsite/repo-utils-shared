@@ -1,3 +1,13 @@
+## v0.24.7 (2025-08-04)
+
+### Fix
+
+- Working on the test suite
+- Fix docker compose for python matrix test
+- Fix docker compose for build docker sbom
+- Fix docker compose for build docker sbom
+- Fix rebase jobs
+
 ## v0.24.6 (2025-07-28)
 
 ### Fix
