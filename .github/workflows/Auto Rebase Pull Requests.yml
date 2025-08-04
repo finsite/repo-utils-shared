@@ -1,13 +1,11 @@
+---
 name: 🔁 Auto Rebase Pull Requests
-
 on:
   pull_request_target:
     types: [labeled, synchronize]
-
 permissions:
   contents: write
   pull-requests: write
-
 jobs:
   rebase:
     if: contains(github.event.pull_request.labels.*.name, 'autorebase')

@@ -2,7 +2,7 @@
   "components": [
     {
       "bom-ref": "requirements-L7",
-      "description": "requirements line 7: boto3==1.39.14",
+      "description": "requirements line 7: boto3==1.40.1",
       "externalReferences": [
         {
           "comment": "implicit dist url",
@@ -11,13 +11,13 @@
         }
       ],
       "name": "boto3",
-      "purl": "pkg:pypi/boto3@1.39.14",
+      "purl": "pkg:pypi/boto3@1.40.1",
       "type": "library",
-      "version": "1.39.14"
+      "version": "1.40.1"
     },
     {
       "bom-ref": "requirements-L9",
-      "description": "requirements line 9: botocore==1.39.14",
+      "description": "requirements line 9: botocore==1.40.1",
       "externalReferences": [
         {
           "comment": "implicit dist url",
@@ -26,13 +26,13 @@
         }
       ],
       "name": "botocore",
-      "purl": "pkg:pypi/botocore@1.39.14",
+      "purl": "pkg:pypi/botocore@1.40.1",
       "type": "library",
-      "version": "1.39.14"
+      "version": "1.40.1"
     },
     {
       "bom-ref": "requirements-L13",
-      "description": "requirements line 13: certifi==2025.7.14",
+      "description": "requirements line 13: certifi==2025.8.3",
       "externalReferences": [
         {
           "comment": "implicit dist url",
@@ -41,9 +41,9 @@
         }
       ],
       "name": "certifi",
-      "purl": "pkg:pypi/certifi@2025.7.14",
+      "purl": "pkg:pypi/certifi@2025.8.3",
       "type": "library",
-      "version": "2025.7.14"
+      "version": "2025.8.3"
     },
     {
       "bom-ref": "requirements-L15",
@@ -197,7 +197,7 @@
     },
     {
       "bom-ref": "requirements-L37",
-      "description": "requirements line 37: matplotlib==3.10.3",
+      "description": "requirements line 37: matplotlib==3.10.5",
       "externalReferences": [
         {
           "comment": "implicit dist url",
@@ -206,9 +206,9 @@
         }
       ],
       "name": "matplotlib",
-      "purl": "pkg:pypi/matplotlib@3.10.3",
+      "purl": "pkg:pypi/matplotlib@3.10.5",
       "type": "library",
-      "version": "3.10.3"
+      "version": "3.10.5"
     },
     {
       "bom-ref": "requirements-L39",
@@ -392,7 +392,7 @@
     },
     {
       "bom-ref": "requirements-L73",
-      "description": "requirements line 73: scipy==1.16.0",
+      "description": "requirements line 73: scipy==1.16.1",
       "externalReferences": [
         {
           "comment": "implicit dist url",
@@ -401,9 +401,9 @@
         }
       ],
       "name": "scipy",
-      "purl": "pkg:pypi/scipy@1.16.0",
+      "purl": "pkg:pypi/scipy@1.16.1",
       "type": "library",
-      "version": "1.16.0"
+      "version": "1.16.1"
     },
     {
       "bom-ref": "requirements-L75",
@@ -422,7 +422,7 @@
     },
     {
       "bom-ref": "requirements-L77",
-      "description": "requirements line 77: sqlalchemy==2.0.41",
+      "description": "requirements line 77: sqlalchemy==2.0.42",
       "externalReferences": [
         {
           "comment": "implicit dist url",
@@ -431,9 +431,9 @@
         }
       ],
       "name": "sqlalchemy",
-      "purl": "pkg:pypi/sqlalchemy@2.0.41",
+      "purl": "pkg:pypi/sqlalchemy@2.0.42",
       "type": "library",
-      "version": "2.0.41"
+      "version": "2.0.42"
     },
     {
       "bom-ref": "requirements-L79",
@@ -598,7 +598,7 @@
     }
   ],
   "metadata": {
-    "timestamp": "2025-07-27T13:03:27.706326+00:00",
+    "timestamp": "2025-08-04T11:08:28.581268+00:00",
     "tools": {
       "components": [
         {
@@ -702,7 +702,7 @@
       ]
     }
   },
-  "serialNumber": "urn:uuid:3327c6f0-e1bf-429b-9a30-678d88b88ef6",
+  "serialNumber": "urn:uuid:de36ea3c-9547-4d4d-9da1-4f98d09e88b9",
   "version": 1,
   "$schema": "http://cyclonedx.org/schema/bom-1.6.schema.json",
   "bomFormat": "CycloneDX",
