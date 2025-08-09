@@ -4,15 +4,15 @@
 #
 #    pip-compile --output-file=requirements.txt --strip-extras requirements.in requirements.in
 #
-boto3==1.40.4
+boto3==1.40.6
     # via -r requirements.in
-botocore==1.40.4
+botocore==1.40.6
     # via
     #   boto3
     #   s3transfer
 certifi==2025.8.3
     # via requests
-charset-normalizer==3.4.2
+charset-normalizer==3.4.3
     # via requests
 colorama==0.4.6
     # via loguru
@@ -22,7 +22,7 @@ cycler==0.12.1
     # via matplotlib
 fonttools==4.59.0
     # via matplotlib
-greenlet==3.2.3
+greenlet==3.2.4
     # via sqlalchemy
 idna==3.10
     # via requests
@@ -45,7 +45,7 @@ numpy==1.26.4
     #   scipy
 packaging==25.0
     # via matplotlib
-pandas==2.2.3
+pandas==2.3.1
     # via -r requirements.in
 pika==1.3.2
     # via -r requirements.in
