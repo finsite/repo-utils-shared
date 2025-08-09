@@ -1,3 +1,9 @@
+## v0.24.8 (2025-08-09)
+
+### Fix
+
+- Working on the test suite
+
 ## v0.24.7 (2025-08-04)
 
 ### Fix
