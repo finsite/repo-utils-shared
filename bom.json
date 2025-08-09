@@ -2,7 +2,7 @@
   "components": [
     {
       "bom-ref": "requirements-L7",
-      "description": "requirements line 7: boto3==1.40.1",
+      "description": "requirements line 7: boto3==1.40.4",
       "externalReferences": [
         {
           "comment": "implicit dist url",
@@ -11,13 +11,13 @@
         }
       ],
       "name": "boto3",
-      "purl": "pkg:pypi/boto3@1.40.1",
+      "purl": "pkg:pypi/boto3@1.40.4",
       "type": "library",
-      "version": "1.40.1"
+      "version": "1.40.4"
     },
     {
       "bom-ref": "requirements-L9",
-      "description": "requirements line 9: botocore==1.40.1",
+      "description": "requirements line 9: botocore==1.40.4",
       "externalReferences": [
         {
           "comment": "implicit dist url",
@@ -26,9 +26,9 @@
         }
       ],
       "name": "botocore",
-      "purl": "pkg:pypi/botocore@1.40.1",
+      "purl": "pkg:pypi/botocore@1.40.4",
       "type": "library",
-      "version": "1.40.1"
+      "version": "1.40.4"
     },
     {
       "bom-ref": "requirements-L13",
@@ -598,7 +598,7 @@
     }
   ],
   "metadata": {
-    "timestamp": "2025-08-04T11:08:28.581268+00:00",
+    "timestamp": "2025-08-07T00:28:59.365141+00:00",
     "tools": {
       "components": [
         {
@@ -702,7 +702,7 @@
       ]
     }
   },
-  "serialNumber": "urn:uuid:de36ea3c-9547-4d4d-9da1-4f98d09e88b9",
+  "serialNumber": "urn:uuid:2aad6901-5fe4-423d-aa51-1ab12b10b2d7",
   "version": 1,
   "$schema": "http://cyclonedx.org/schema/bom-1.6.schema.json",
   "bomFormat": "CycloneDX",
